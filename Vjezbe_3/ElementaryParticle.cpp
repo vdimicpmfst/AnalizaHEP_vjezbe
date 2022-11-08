@@ -34,27 +34,34 @@ void ElementaryParticle::transverzalno (void){
 	cout << "Transverzalna kolicina gibanja = " <<sqrt (px*px + py*py)<< endl;
 	return ;
 	}
+void ElementaryParticle::setInfo(string i, double m, bool b){
+	ime = i;
+	masa = m;
+	bozon = b;
+	}
 void ElementaryParticle::bosonDecay(ElementaryParticle* particle1, ElementaryParticle* particle2){
 	if (!bozon){
 		cout << "Raspad nije moguc" << endl;
 		return ;
 		}
-	srand(time(0));
-	int rng = rand () % 1000;
-	if (rng < 214){
-		particle1 -> ime = "W bozon";
-		particle2 -> ime = "W bozon";
+	//srand(time(0));
+	int rng = rand () % 1001;
+	if (rng <= 214){
+		particle1 -> setInfo("W+", 80.4, true);
+		particle2 -> setInfo("W-", 80.4, true);
 		}
-	else if (rng >= 214 && rng < 278){
-                particle1 -> ime = "tau lepton";
-                particle2 -> ime = "tau lepton";
+	else if (rng > 214 && rng <= 278){
+                particle1 -> setInfo("tau+", 1.78, false);
+                particle2 -> setInfo("tau-", 1.78, false);
                 }
-	else if (rng >= 278 && rng < 304){
-                particle1 -> ime = "Z bozon";
-                particle2 -> ime = "Z bozon";
+	else if (rng > 278 && rng <= 304){
+                particle1 -> setInfo("Z", 91.2, true);
+                particle2 -> setInfo("Z", 91.2, true);
                 }
 	else{
-                particle1 -> ime = "botoom kvark";
-                particle2 -> ime = "bottom kvark";
+                particle1 -> setInfo("b-quark", 4.18, false);
+                particle2 -> setInfo("b-quark", 4.18, false);
                 }
+	particle1 -> fourVector (-100 + rand() % 201, -100 + rand() % 201, -100 + rand() % 201);
+	particle2 -> fourVector (this -> px - particle1 -> px, this -> py - particle1 -> py, this -> pz - particle1 -> pz);
 	}
