@@ -32,7 +32,7 @@ void Analyzer::ReadTextFile(string filename){
 void Analyzer::ConvertTxtToRootFile (string input, TString output){
 	fstream file, test;
 	file.open(input, ios::in);
-	test.open("test.txt", ios::out);
+	//test.open("test.txt", ios::out);
 	TFile *root_file = new TFile (output, "RECREATE");
 	TTree *tree = new TTree ("Tree", "Higgs decay");
 	skipLine = true;
@@ -63,8 +63,8 @@ void Analyzer::ConvertTxtToRootFile (string input, TString output){
 		}	
 		file >> _decayParticle1 >> masa1 >> bozon1 >> E1 >> px1 >> py1 >> pz1
                      >> _decayParticle2 >> masa2 >> bozon2 >> E2 >> px2 >> py2 >> pz2;
-		test << _decayParticle1 << ' ' << masa1 << ' ' << bozon1 << ' ' << E1 << ' ' << px1 << ' ' << ' ' << py1 << ' ' << pz1
-                     << ' ' << _decayParticle2 << ' ' << ' ' << masa2 << ' ' << bozon2 << ' ' << E2 << ' ' << px2 << ' ' << py2 << ' ' << pz2 << endl;
+		/*test << _decayParticle1 << ' ' << masa1 << ' ' << bozon1 << ' ' << E1 << ' ' << px1 << ' ' << ' ' << py1 << ' ' << pz1
+                     << ' ' << _decayParticle2 << ' ' << ' ' << masa2 << ' ' << bozon2 << ' ' << E2 << ' ' << px2 << ' ' << py2 << ' ' << pz2 << endl;*/
 		if (file.eof()){
 			break;
 		}
