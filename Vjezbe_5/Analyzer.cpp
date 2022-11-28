@@ -55,7 +55,7 @@ void Analyzer::PlotHistogram(){
 		hist_pt1 -> Fill (sqrt (DecayParticle1_px*DecayParticle1_px+DecayParticle1_py*DecayParticle1_py));
 		hist_pt2 -> Fill (sqrt (DecayParticle2_px*DecayParticle2_px+DecayParticle2_py*DecayParticle2_py));
 	}
-	gStyle->SetOptStat(0);
+	//gStyle->SetOptStat(0);
 	hist_pt1 -> Draw();
 	hist_pt2 -> Draw ("same");
 	canvas -> Print("hist_zad2.pdf");
