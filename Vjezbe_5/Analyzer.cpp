@@ -59,7 +59,7 @@ void Analyzer::PlotHistogram(){
 	gStyle->SetOptStat(0);
 	hist_pt1 -> SetLineColor (kRed);
 	hist_pt1 -> SetFillColor (kRed);
-	hist_pt1 -> SetTitle ("Transverzalna kolicina gibanja za 1 cesticu iz raspada");
+	hist_pt1 -> SetTitle ("Transverzalna kolicina gibanja za cestice iz raspada");
 	hist_pt1 -> GetXaxis() -> SetTitle ("pT");
 	hist_pt1 -> GetYaxis() -> SetTitle ("Broj dogadaja");
 	TLegend *legend = new TLegend(0.6,0.75,0.9,0.9);
