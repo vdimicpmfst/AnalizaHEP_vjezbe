@@ -48,16 +48,16 @@ void Analyzer::PlotHistogram(){
 	TCanvas *canvas = new TCanvas ();
 	canvas -> SetCanvasSize(1500, 700);
 	TH1F *hist_pt1 = new TH1F("pT1", "pT1", 50, 0, 300);
-	TH1F *hist_pt2 = new TH1F("pT2", "pT2", 50, 0, 300);
+	//TH1F *hist_pt2 = new TH1F("pT2", "pT2", 50, 0, 300);
 	Long64_t entries = fChain -> GetEntriesFast();
 	for (Long64_t i = 0; i < entries; i++){
 		fChain -> GetEntry (i);
 		hist_pt1 -> Fill (sqrt (DecayParticle1_px*DecayParticle1_px+DecayParticle1_py*DecayParticle1_py));
-		hist_pt2 -> Fill (sqrt (DecayParticle2_px*DecayParticle2_px+DecayParticle2_py*DecayParticle2_py));
+		//hist_pt2 -> Fill (sqrt (DecayParticle2_px*DecayParticle2_px+DecayParticle2_py*DecayParticle2_py));
 	}
 	//gStyle->SetOptStat(0);
 	hist_pt1 -> Draw();
-	hist_pt2 -> Draw ("same");
+	//hist_pt2 -> Draw ("same");
 	canvas -> Print("hist_zad2.pdf");
 	canvas -> Print("hist_zad2.png");
 	canvas -> Print("hist_zad2.root");
