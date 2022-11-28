@@ -3,6 +3,7 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <TLegend.h>
 
 void Analyzer::Loop()
 {
@@ -55,10 +56,17 @@ void Analyzer::PlotHistogram(){
 		hist_pt1 -> Fill (sqrt (DecayParticle1_px*DecayParticle1_px+DecayParticle1_py*DecayParticle1_py));
 		//hist_pt2 -> Fill (sqrt (DecayParticle2_px*DecayParticle2_px+DecayParticle2_py*DecayParticle2_py));
 	}
-	//gStyle->SetOptStat(0);
+	gStyle->SetOptStat(0);
+	hist_pt1 -> SetLineColor (kRed);
+	hist_pt1 -> SetFillColor (kRed);
+	hist_pt1 -> SetTitle ("Transverzalna kolicina gibanja za 1 cesticu iz raspada");
+	//TLegend *legend = new TLegend (0.6, 0.75, 0.9, 0.9, "", "NB");
+	TLegend *legend = new TLegend(0.6,0.75,0.9,0.9);
+	legend -> SetHeader ("Simulacija", "C");
+	legend -> AddEntry (hist_pt1, "Distribucija pT1", "l");
 	hist_pt1 -> Draw();
 	//hist_pt2 -> Draw ("same");
-	canvas -> Print("hist_zad2.pdf");
-	canvas -> Print("hist_zad2.png");
-	canvas -> Print("hist_zad2.root");
+	canvas -> Print("hist_zad3.pdf");
+	canvas -> Print("hist_zad3.png");
+	canvas -> Print("hist_zad3.root");
 }
