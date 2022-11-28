@@ -60,5 +60,5 @@ void Analyzer::PlotHistogram(){
 	hist_pt2 -> Draw ("same");
 	canvas -> Print("hist_zad2.pdf");
 	canvas -> Print("hist_zad2.png");
-
+	canvas -> Print("hist_zad2.root");
 }
