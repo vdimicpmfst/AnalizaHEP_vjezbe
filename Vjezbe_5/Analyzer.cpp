@@ -4,6 +4,7 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <TLegend.h>
+#include <TLorentzVector.h>
 
 void Analyzer::Loop()
 {
@@ -50,11 +51,17 @@ void Analyzer::PlotHistogram(){
 	canvas -> SetCanvasSize(1500, 700);
 	TH1F *hist_pt1 = new TH1F("pT1", "pT1", 50, 0, 300);
 	TH1F *hist_pt2 = new TH1F("pT2", "pT2", 50, 0, 300);
+	TH1F *hist_ptHiggs = new TH1F("pTHiggs", "ptHiggs", 50, 0, 300);
+	TLorentzVector p1, p2, pHiggs;
 	Long64_t entries = fChain -> GetEntriesFast();
 	for (Long64_t i = 0; i < entries; i++){
 		fChain -> GetEntry (i);
 		hist_pt1 -> Fill (sqrt (DecayParticle1_px*DecayParticle1_px+DecayParticle1_py*DecayParticle1_py));
 		hist_pt2 -> Fill (sqrt (DecayParticle2_px*DecayParticle2_px+DecayParticle2_py*DecayParticle2_py));
+		p1.SetPxPyPzE(DecayParticle1_px, DecayParticle1_py, DecayParticle1_pz, DecayParticle1_E);
+		p2.SetPxPyPzE(DecayParticle1_px, DecayParticle1_py, DecayParticle1_pz, DecayParticle1_E);
+		pHiggs = p1 + p2;
+		hist_ptHiggs -> Fill (pHiggs.Pt());
 	}
 	gStyle->SetOptStat(0);
 	hist_pt1 -> SetLineColor (kRed);
@@ -66,10 +73,17 @@ void Analyzer::PlotHistogram(){
 	legend -> SetHeader ("Simulacija", "C");
 	legend -> AddEntry (hist_pt1, "Distribucija pT1", "f");
 	legend -> AddEntry (hist_pt2, "Distribucija pT2", "f");
+	canvas -> Divide (2,1);
+	canvas -> cd (1);
 	hist_pt1 -> Draw();
 	hist_pt2 -> Draw ("same");
 	legend -> Draw();
-	canvas -> Print("hist_zad4.pdf");
-	canvas -> Print("hist_zad4.png");
-	canvas -> Print("hist_zad4.root");
+	canvas -> cd(2);
+	hist_ptHiggs -> SetTitle ("Transverzalna kolicina gibanja Higgsa");
+	hist_ptHiggs -> GetXaxis() -> SetTitle ("pT");
+	hist_ptHiggs -> GetYaxis() -> SetTitle ("Broj dogadaja");
+	hist_ptHiggs -> Draw ();
+	canvas -> Print("hist_zad5.pdf");
+	canvas -> Print("hist_zad5.png");
+	canvas -> Print("hist_zad5.root");
 }
