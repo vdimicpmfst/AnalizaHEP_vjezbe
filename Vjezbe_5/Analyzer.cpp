@@ -62,7 +62,7 @@ void Analyzer::PlotHistogram(){
 	hist_pt1 -> SetTitle ("Transverzalna kolicina gibanja za 1 cesticu iz raspada");
 	TLegend *legend = new TLegend(0.6,0.75,0.9,0.9);
 	legend -> SetHeader ("Simulacija", "C");
-	legend -> AddEntry (hist_pt1, "Distribucija pT1", "l");
+	legend -> AddEntry (hist_pt1, "Distribucija pT1", "f");
 	hist_pt1 -> Draw();
 	legend -> Draw ();
 	//hist_pt2 -> Draw ("same");
