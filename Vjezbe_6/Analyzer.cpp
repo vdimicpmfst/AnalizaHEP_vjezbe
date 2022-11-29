@@ -246,6 +246,7 @@ void Analyzer::PlotHistogram (TString input_name){
 	canvas -> Print ("Mass_hist.pdf");
 	canvas -> Print ("Mass_hist.png");
 	canvas -> Print ("Mass_hist.root");
+	cout << "Ocekivani broj Higgs bozona za 137/fb je " << Mass_hist -> Integral () << endl;
 }
 
 TLegend* Analyzer::CreateLegend (TH1F *lepton1, TH1F *lepton2, TH1F *lepton3, TH1F *lepton4){
