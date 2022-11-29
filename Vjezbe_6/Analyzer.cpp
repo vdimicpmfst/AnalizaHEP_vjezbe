@@ -233,7 +233,7 @@ void Analyzer::PlotHistogram (){
 	Mass_hist -> SetLineColor (kRed);
 	Mass_hist -> SetFillColor (kRed);
 	Mass_hist -> Draw ("HIST");
-	legend = new TLegend (0.5, 0.7, 0.9, 0.9);
+	legend = new TLegend (0.5, 0.8, 0.9, 0.9);
 	legend -> AddEntry (Mass_hist, "gluon-gluon fuzija", "f");
 	legend -> SetTextSize (0.03);
 	legend -> Draw ();
