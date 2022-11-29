@@ -152,15 +152,15 @@ void Analyzer::PlotHistogram (){
         LeptonPhi_hist[3] -> SetLineColor (kBlack);
         LeptonBDT_hist[3] -> SetLineColor (kBlack);
 
-	LeptonPt_hist[3] -> SetFillColor (kBlack);
-        LeptonEta_hist[3] -> SetFillColor (kBlack);
-        LeptonPhi_hist[3] -> SetFillColor (kBlack);
-        LeptonBDT_hist[3] -> SetFillColor (kBlack);
+	LeptonPt_hist[3] -> SetFillColorAlpha (kBlack,0.35);
+        LeptonEta_hist[3] -> SetFillColorAlpha (kBlack,0.35);
+        LeptonPhi_hist[3] -> SetFillColorAlpha (kBlack,0.35);
+        LeptonBDT_hist[3] -> SetFillColorAlpha (kBlack,0.35);
 
-	LeptonPt_hist[3] -> SetFillStyle (4050);
+/*	LeptonPt_hist[3] -> SetFillStyle (4050);
         LeptonEta_hist[3] -> SetFillStyle (4050);
         LeptonPhi_hist[3] -> SetFillStyle (4050);
-        LeptonBDT_hist[3] -> SetFillStyle (4050);
+        LeptonBDT_hist[3] -> SetFillStyle (4050);*/
 	
 	gPad -> SetLeftMargin (0.15);
 	
