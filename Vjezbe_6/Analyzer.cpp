@@ -105,42 +105,62 @@ void Analyzer::PlotHistogram (){
 	LeptonPt_hist[0] -> SetLineColor (kRed);
 	LeptonEta_hist[0] -> SetLineColor (kRed);
         LeptonPhi_hist[0] -> SetLineColor (kRed);
-        LeptonBDT_hist[0] -> SetLineColor (kRed);
+        LeptonBDT_hist[0] -> SetLineColor (kRed);	
 	
 	LeptonPt_hist[0] -> SetFillColor (kRed);
         LeptonEta_hist[0] -> SetFillColor (kRed);
         LeptonPhi_hist[0] -> SetFillColor (kRed);
         LeptonBDT_hist[0] -> SetFillColor (kRed);
 
+	LeptonPt_hist[0] -> SetFillStyle (4050);
+        LeptonEta_hist[0] -> SetFillStyle (4050);
+        LeptonPhi_hist[0] -> SetFillStyle (4050);
+        LeptonBDT_hist[0] -> SetFillStyle (4050);
+
 	LeptonPt_hist[1] -> SetLineColor (kBlue);
         LeptonEta_hist[1] -> SetLineColor (kBlue);
         LeptonPhi_hist[1] -> SetLineColor (kBlue);
         LeptonBDT_hist[1] -> SetLineColor (kBlue);
 
-	LeptonPt_hist[1] -> SetFillColor (kBlue - 2);
-        LeptonEta_hist[1] -> SetFillColor (kBlue - 2);
-        LeptonPhi_hist[1] -> SetFillColor (kBlue - 2);
-        LeptonBDT_hist[1] -> SetFillColor (kBlue - 2);
+	LeptonPt_hist[1] -> SetFillColor (kBlue);
+        LeptonEta_hist[1] -> SetFillColor (kBlue);
+        LeptonPhi_hist[1] -> SetFillColor (kBlue);
+        LeptonBDT_hist[1] -> SetFillColor (kBlue);
+
+	LeptonPt_hist[1] -> SetFillStyle (4050);
+        LeptonEta_hist[1] -> SetFillStyle (4050);
+        LeptonPhi_hist[1] -> SetFillStyle (4050);
+        LeptonBDT_hist[1] -> SetFillStyle (4050);
 
 	LeptonPt_hist[2] -> SetLineColor (kGreen);
         LeptonEta_hist[2] -> SetLineColor (kGreen);
         LeptonPhi_hist[2] -> SetLineColor (kGreen);
         LeptonBDT_hist[2] -> SetLineColor (kGreen);
 
-	LeptonPt_hist[2] -> SetFillColor (kGreen - 4);
-        LeptonEta_hist[2] -> SetFillColor (kGreen - 4);
-        LeptonPhi_hist[2] -> SetFillColor (kGreen - 4);
-        LeptonBDT_hist[2] -> SetFillColor (kGreen - 4);
+	LeptonPt_hist[2] -> SetFillColor (kGreen);
+        LeptonEta_hist[2] -> SetFillColor (kGreen);
+        LeptonPhi_hist[2] -> SetFillColor (kGreen);
+        LeptonBDT_hist[2] -> SetFillColor (kGreen);
+
+	LeptonPt_hist[2] -> SetFillStyle (4050);
+        LeptonEta_hist[2] -> SetFillStyle (4050);
+        LeptonPhi_hist[2] -> SetFillStyle (4050);
+        LeptonBDT_hist[2] -> SetFillStyle (4050);
 	
 	LeptonPt_hist[3] -> SetLineColor (kBlack);
         LeptonEta_hist[3] -> SetLineColor (kBlack);
         LeptonPhi_hist[3] -> SetLineColor (kBlack);
         LeptonBDT_hist[3] -> SetLineColor (kBlack);
 
-	LeptonPt_hist[3] -> SetFillColor (kBlack - 6);
-        LeptonEta_hist[3] -> SetFillColor (kBlack - 6);
-        LeptonPhi_hist[3] -> SetFillColor (kBlack - 6);
-        LeptonBDT_hist[3] -> SetFillColor (kBlack - 6);
+	LeptonPt_hist[3] -> SetFillColor (kBlack);
+        LeptonEta_hist[3] -> SetFillColor (kBlack);
+        LeptonPhi_hist[3] -> SetFillColor (kBlack);
+        LeptonBDT_hist[3] -> SetFillColor (kBlack);
+
+	LeptonPt_hist[3] -> SetFillStyle (4050);
+        LeptonEta_hist[3] -> SetFillStyle (4050);
+        LeptonPhi_hist[3] -> SetFillStyle (4050);
+        LeptonBDT_hist[3] -> SetFillStyle (4050);
 	
 	gPad -> SetLeftMargin (0.15);
 	
