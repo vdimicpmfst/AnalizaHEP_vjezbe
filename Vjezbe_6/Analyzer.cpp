@@ -224,6 +224,8 @@ void Analyzer::PlotHistogram (){
 
 	canvas = new TCanvas ();
 	canvas -> SetCanvasSize (900,900);
+	gPad -> SetLeftMargin (0.15);
+	gPad -> SetBottomMargin (0.15);
 	Mass_hist -> GetXaxis () -> SetTitle ("m_{4l} [GeV]");
 	Mass_hist -> GetYaxis () -> SetTitle ("Events / 2 GeV");	
 	Mass_hist -> SetMaximum(1.5 * Mass_hist -> GetMaximum ());
