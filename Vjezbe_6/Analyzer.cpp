@@ -42,7 +42,7 @@ void Analyzer::Loop()
    }
 }
 
-void Analyzer::PlotHistogram (){
+void Analyzer::PlotHistogram (TString input_name){
 	canvas = new TCanvas();
 	canvas -> SetCanvasSize (900,900);
 	canvas -> Divide (2,2);
@@ -59,13 +59,19 @@ void Analyzer::PlotHistogram (){
 	}
 	Mass_hist = new TH1F ("Mass_hist", "Rekonstruirana masa 4 leptona", 25, 90., 140.);
 	entries = fChain -> GetEntriesFast();
+	input_file = new TFile (input_name);
+	hCounters = (TH1F*) input_file -> Get ("ZZTree/Counters");
+	sum_weight = (Float_t)hCounters -> GetBinContent (40);
+	input_tree = (TTree*) input_file -> Get ("ZZTree/candTree");
+	Init (input_tree);
 	for (int i=0; i < entries;i++){
 		fChain -> GetEntry (i);
+		event_weight = (137. * 1000 * xsec * overallEventWeight) / sum_weight;
 		for (int j = 0; j < 4; j++){
-			LeptonPt_hist[j] -> Fill (LepPt -> at (j));
-			LeptonEta_hist[j] -> Fill (LepEta -> at (j));
-			LeptonPhi_hist[j] -> Fill (LepPhi -> at (j));
-			LeptonBDT_hist[j] -> Fill (LepBDT -> at (j));
+			LeptonPt_hist[j] -> Fill (LepPt -> at (j), event_weight);
+			LeptonEta_hist[j] -> Fill (LepEta -> at (j), event_weight);
+			LeptonPhi_hist[j] -> Fill (LepPhi -> at (j), event_weight);
+			LeptonBDT_hist[j] -> Fill (LepBDT -> at (j), event_weight);
 		}
 		lept1.SetPtEtaPhiM(LepPt -> at (0), LepEta -> at (0), LepPhi -> at (0), 0.);
 		lept2.SetPtEtaPhiM(LepPt -> at (1), LepEta -> at (1), LepPhi -> at (1), 0.);
@@ -77,7 +83,7 @@ void Analyzer::PlotHistogram (){
 			Z2 = lept3 + lept4;
 			Higgs = Z1 + Z2;
 		}
-		Mass_hist -> Fill (Higgs.M());
+		Mass_hist -> Fill (Higgs.M(), event_weight);
 	}
 	for (int i = 0; i < 4; i++){
 		LeptonPt_hist[i] -> SetStats (0);
@@ -218,9 +224,9 @@ void Analyzer::PlotHistogram (){
         legend = CreateLegend (LeptonBDT_hist[0], LeptonBDT_hist[1], LeptonBDT_hist[2], LeptonBDT_hist[3]);
         legend -> Draw ();
 
-	canvas -> Print ("hist_zad2.pdf");
-	canvas -> Print ("hist_zad2.png");
-	canvas -> Print ("hist_zad2.root");
+	canvas -> Print ("Leptons.pdf");
+	canvas -> Print ("Leptons.png");
+	canvas -> Print ("Leptons.root");
 
 	canvas = new TCanvas ();
 	canvas -> SetCanvasSize (900,900);
@@ -237,9 +243,9 @@ void Analyzer::PlotHistogram (){
 	legend -> AddEntry (Mass_hist, "gluon-gluon fuzija", "f");
 	legend -> SetTextSize (0.03);
 	legend -> Draw ();
-	canvas -> Print ("hist_zad3.pdf");
-	canvas -> Print ("hist_zad3.png");
-	canvas -> Print ("hist_zad3.root");
+	canvas -> Print ("Mass_hist.pdf");
+	canvas -> Print ("Mass_hist.png");
+	canvas -> Print ("Mass_hist.root");
 }
 
 TLegend* Analyzer::CreateLegend (TH1F *lepton1, TH1F *lepton2, TH1F *lepton3, TH1F *lepton4){

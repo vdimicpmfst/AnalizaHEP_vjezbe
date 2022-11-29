@@ -1441,7 +1441,7 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
-   virtual void     PlotHistogram();
+   virtual void     PlotHistogram(TString input_name);
    //virtual void     PlotMass();
 private:
    TCanvas *canvas;
@@ -1455,6 +1455,10 @@ private:
    TString hist_ime;
    Long64_t entries;
    TLegend* CreateLegend (TH1F *lepton1, TH1F *lepton2, TH1F *lepton3, TH1F *lepton4);
+   Float_t sum_weight, event_weight;
+   TH1F *hCounters;
+   TFile *input_file;
+   TTree *input_tree;
 };
 
 #endif
