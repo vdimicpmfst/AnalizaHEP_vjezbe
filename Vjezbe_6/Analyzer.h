@@ -1450,7 +1450,7 @@ private:
    TH1F *LeptonPhi_hist[4];
    TH1F *LeptonBDT_hist[4];
    TH1F *Mass_hist;
-   TLorentzVector lept0,lept1,lept2,lept3,Z1,Z2,Higgs;
+   TLorentzVector lept1,lept2,lept3,lept4,Z1,Z2,Higgs;
    TLegend *legend;
    TString hist_ime;
    Long64_t entries;

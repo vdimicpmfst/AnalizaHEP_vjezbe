@@ -57,6 +57,7 @@ void Analyzer::PlotHistogram (){
 		hist_ime = "LeptonBDT_hist" + to_string (i+1);
                 LeptonBDT_hist[i] = new TH1F (hist_ime, "BDT score", 20, -1., 1.);
 	}
+	Mass_hist = new TH1F ("Mass_hist", "Rekonstruirana masa 4 leptona", 25, 90., 140.);
 	entries = fChain -> GetEntriesFast();
 	for (int i=0; i < entries;i++){
 		fChain -> GetEntry (i);
@@ -66,7 +67,17 @@ void Analyzer::PlotHistogram (){
 			LeptonPhi_hist[j] -> Fill (LepPhi -> at (j));
 			LeptonBDT_hist[j] -> Fill (LepBDT -> at (j));
 		}
-	
+		lept1.SetPtEtaPhiM(LepPt -> at (0), LepEta -> at (0), LepPhi -> at (0), 0.);
+		lept2.SetPtEtaPhiM(LepPt -> at (1), LepEta -> at (1), LepPhi -> at (1), 0.);
+		lept3.SetPtEtaPhiM(LepPt -> at (2), LepEta -> at (2), LepPhi -> at (2), 0.);
+		lept4.SetPtEtaPhiM(LepPt -> at (3), LepEta -> at (3), LepPhi -> at (3), 0.);
+
+		if (LepLepId -> at (0) + LepLepId -> at (1) == 0 && LepLepId -> at (2)+ LepLepId -> at (3) == 0){
+			Z1 = lept1 + lept2;
+			Z2 = lept3 + lept4;
+			Higgs = Z1 + Z2;
+		}
+		Mass_hist -> Fill (Higgs.M());
 	}
 	for (int i = 0; i < 4; i++){
 		LeptonPt_hist[i] -> SetStats (0);
@@ -210,8 +221,22 @@ void Analyzer::PlotHistogram (){
 	canvas -> Print ("hist_zad2.pdf");
 	canvas -> Print ("hist_zad2.png");
 	canvas -> Print ("hist_zad2.root");
-	
 
+	canvas = new TCanvas ();
+	canvas -> SetCanvasSize (900,900);
+	Mass_hist -> GetXaxis () -> SetTitle ("m_{4l} [GeV]");
+	Mass_hist -> GetYaxis () -> SetTitle ("Events / 2 GeV");	
+	Mass_hist -> SetMaximum(1.5 * Mass_hist -> GetMaximum ());
+	Mass_hist -> SetStats (0);
+	Mass_hist -> SetLineColor (kRed);
+	Mass_hist -> SetFillColor (kRed);
+	Mass_hist -> Draw ("HIST");
+	legend = new TLegend (0.5, 0.7, 0.9, 0.9);
+	legend -> AddEntry (Mass_hist, "gluon-gluon fuzija", "f");
+	legend -> Draw ();
+	canvas -> Print ("hist_zad3.pdf");
+	canvas -> Print ("hist_zad3.png");
+	canvas -> Print ("hist_zad3.root");
 }
 
 TLegend* Analyzer::CreateLegend (TH1F *lepton1, TH1F *lepton2, TH1F *lepton3, TH1F *lepton4){
