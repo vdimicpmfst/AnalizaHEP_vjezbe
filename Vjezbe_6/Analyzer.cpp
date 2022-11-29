@@ -153,6 +153,7 @@ void Analyzer::PlotHistogram (){
 	legend -> Draw ();
 
 	canvas -> cd (2);
+	gPad -> SetLeftMargin(0.15);
 	LeptonEta_hist[0] -> Draw ("HIST");
         LeptonEta_hist[1] -> Draw ("HIST SAME");
         LeptonEta_hist[2] -> Draw ("HIST SAME");
@@ -162,6 +163,7 @@ void Analyzer::PlotHistogram (){
         legend -> Draw ();
 
 	canvas -> cd (3);
+	gPad -> SetLeftMargin (0.15);
 	LeptonPhi_hist[0] -> Draw ("HIST");
         LeptonPhi_hist[1] -> Draw ("HIST SAME");
         LeptonPhi_hist[2] -> Draw ("HIST SAME");
@@ -171,6 +173,8 @@ void Analyzer::PlotHistogram (){
         legend -> Draw ();
 
 	canvas -> cd (4);
+	gPad -> SetLeftMargin (0.15);
+	gPad -> SetLogy();
 	LeptonBDT_hist[0] -> Draw ("HIST");
         LeptonBDT_hist[1] -> Draw ("HIST SAME");
         LeptonBDT_hist[2] -> Draw ("HIST SAME");
