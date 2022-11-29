@@ -81,14 +81,14 @@ void Analyzer::PlotHistogram (){
 		LeptonPt_hist[i] -> GetXaxis() -> SetTitleOffset (1.9);
 		LeptonPt_hist[i] -> SetMaximum (1.6 * LeptonPt_hist[3] -> GetMaximum());		
 
-		LeptonEta_hist[i] -> GetXaxis() -> SetTitle ("Eta");
+		LeptonEta_hist[i] -> GetXaxis() -> SetTitle ("#Eta");
                 LeptonEta_hist[i] -> GetYaxis() -> SetTitle ("Events / 0.1");
 		LeptonEta_hist[i] -> GetXaxis() -> SetLabelSize (0.04);
                 LeptonEta_hist[i] -> GetYaxis() -> SetLabelSize (0.04);
                 LeptonEta_hist[i] -> GetXaxis() -> SetTitleOffset (1.8);
                 LeptonEta_hist[i] -> SetMaximum (1.8 * LeptonEta_hist[3] -> GetMaximum());
 
-		LeptonPhi_hist[i] -> GetXaxis() -> SetTitle ("Phi");
+		LeptonPhi_hist[i] -> GetXaxis() -> SetTitle ("#Phi");
                 LeptonPhi_hist[i] -> GetYaxis() -> SetTitle ("Events / 0.2");
 		LeptonPhi_hist[i] -> GetXaxis() -> SetLabelSize (0.04);
                 LeptonPhi_hist[i] -> GetYaxis() -> SetLabelSize (0.04);
@@ -163,7 +163,8 @@ void Analyzer::PlotHistogram (){
         LeptonBDT_hist[3] -> SetFillStyle (4050);*/
 	
 	gPad -> SetLeftMargin (0.15);
-	
+	gPad -> SetBottomMargin (0.15);	
+
 	LeptonPt_hist[0] -> Draw ("HIST");
 	LeptonPt_hist[1] -> Draw ("HIST SAME");
 	LeptonPt_hist[2] -> Draw ("HIST SAME");
@@ -174,6 +175,7 @@ void Analyzer::PlotHistogram (){
 
 	canvas -> cd (2);
 	gPad -> SetLeftMargin(0.15);
+	gPad -> SetBottomMargin (0.15);
 	LeptonEta_hist[0] -> Draw ("HIST");
         LeptonEta_hist[1] -> Draw ("HIST SAME");
         LeptonEta_hist[2] -> Draw ("HIST SAME");
@@ -184,6 +186,7 @@ void Analyzer::PlotHistogram (){
 
 	canvas -> cd (3);
 	gPad -> SetLeftMargin (0.15);
+	gPad -> SetBottomMargin (0.15);
 	LeptonPhi_hist[0] -> Draw ("HIST");
         LeptonPhi_hist[1] -> Draw ("HIST SAME");
         LeptonPhi_hist[2] -> Draw ("HIST SAME");
@@ -194,6 +197,7 @@ void Analyzer::PlotHistogram (){
 
 	canvas -> cd (4);
 	gPad -> SetLeftMargin (0.15);
+	gPad -> SetBottomMargin (0.15);
 	gPad -> SetLogy();
 	LeptonBDT_hist[0] -> Draw ("HIST");
         LeptonBDT_hist[1] -> Draw ("HIST SAME");
