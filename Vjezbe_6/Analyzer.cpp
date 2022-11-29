@@ -76,12 +76,31 @@ void Analyzer::PlotHistogram (){
 		
 		LeptonPt_hist[i] -> GetXaxis() -> SetTitle ("p_{T} [GeV]");
                 LeptonPt_hist[i] -> GetYaxis() -> SetTitle ("Events / 3 GeV");
+		LeptonPt_hist[i] -> GetXaxis() -> SetLabelSize (0.04);
+		LeptonPt_hist[i] -> GetYaxis() -> SetLabelSize (0.04);
+		LeptonPt_hist[i] -> GetXaxis() -> SetTitleOffset (1.9);
+		LeptonPt_hist[i] -> SetMaximum (1.6 * LeptonPt_hist[3] -> GetMaximum());		
+
 		LeptonEta_hist[i] -> GetXaxis() -> SetTitle ("Eta");
                 LeptonEta_hist[i] -> GetYaxis() -> SetTitle ("Events / 0.1");
+		LeptonEta_hist[i] -> GetXaxis() -> SetLabelSize (0.04);
+                LeptonEta_hist[i] -> GetYaxis() -> SetLabelSize (0.04);
+                LeptonEta_hist[i] -> GetXaxis() -> SetTitleOffset (1.8);
+                LeptonEta_hist[i] -> SetMaximum (1.8 * LeptonEta_hist[3] -> GetMaximum());
+
 		LeptonPhi_hist[i] -> GetXaxis() -> SetTitle ("Phi");
                 LeptonPhi_hist[i] -> GetYaxis() -> SetTitle ("Events / 0.2");
+		LeptonPhi_hist[i] -> GetXaxis() -> SetLabelSize (0.04);
+                LeptonPhi_hist[i] -> GetYaxis() -> SetLabelSize (0.04);
+                LeptonPhi_hist[i] -> GetXaxis() -> SetTitleOffset (1.8);
+                LeptonPhi_hist[i] -> SetMaximum (1.8 * LeptonPhi_hist[3] -> GetMaximum());
+
 		LeptonBDT_hist[i] -> GetXaxis() -> SetTitle ("BDT score");
                 LeptonBDT_hist[i] -> GetYaxis() -> SetTitle ("Events / 0.1");
+		LeptonBDT_hist[i] -> GetXaxis() -> SetLabelSize (0.04);
+                LeptonBDT_hist[i] -> GetYaxis() -> SetLabelSize (0.04);
+                LeptonBDT_hist[i] -> GetXaxis() -> SetTitleOffset (1.8);
+                LeptonBDT_hist[i] -> SetMaximum (200 * LeptonBDT_hist[3] -> GetMaximum());
 	}
 	LeptonPt_hist[0] -> SetLineColor (kRed);
 	LeptonEta_hist[0] -> SetLineColor (kRed);
@@ -122,7 +141,9 @@ void Analyzer::PlotHistogram (){
         LeptonEta_hist[3] -> SetFillColor (kBlack - 6);
         LeptonPhi_hist[3] -> SetFillColor (kBlack - 6);
         LeptonBDT_hist[3] -> SetFillColor (kBlack - 6);
-
+	
+	gPad -> SetLeftMargin (0.15);
+	
 	LeptonPt_hist[0] -> Draw ("HIST");
 	LeptonPt_hist[1] -> Draw ("HIST SAME");
 	LeptonPt_hist[2] -> Draw ("HIST SAME");
