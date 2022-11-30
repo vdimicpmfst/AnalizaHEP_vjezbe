@@ -1445,14 +1445,14 @@ public :
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
    virtual void     PlotHistogram(TString input_name);
-   //virtual void     PlotMass();
+   virtual void     PlotMass();
 private:
    TCanvas *canvas;
    TH1F *LeptonPt_hist[4];
    TH1F *LeptonEta_hist[4];
    TH1F *LeptonPhi_hist[4];
    TH1F *LeptonBDT_hist[4];
-   TH1F *Mass_hist;
+   TH1F *Mass_hist_signal, *Mass_hist_background;
    TLorentzVector lept1,lept2,lept3,lept4,Z1,Z2,Higgs;
    TLegend *legend;
    TString hist_ime;
@@ -1462,6 +1462,7 @@ private:
    TH1F *hCounters;
    TFile *input_file;
    TTree *input_tree;
+   THStack *Mass_hist;
 };
 
 #endif
@@ -1481,6 +1482,8 @@ Analyzer::Analyzer(TTree *tree) : fChain(0)
 
    }
    Init(tree,"/home/public/data/ggH125/ZZ4lAnalysis.root:/ZZTree");
+   Mass_hist_signal = new TH1F ("Mass_hist_signal", "Rekonstruirana masa 4 leptona", 50, 70., 170.);
+   Mass_hist_background = new TH1F ("Mass_hist_background", "Rekonstruirana masa 4 leptona", 50, 70., 170.);
 }
 
 Analyzer::~Analyzer()
