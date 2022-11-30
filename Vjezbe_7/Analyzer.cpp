@@ -59,12 +59,13 @@ void Analyzer::PlotHistogram (TString input_name){
 	}
 //	Mass_hist_signal = new TH1F ("Mass_hist_signal", "Rekonstruirana masa 4 leptona", 50, 70., 170.);
 //	Mass_hist_background = new TH1F ("Mass_hist_background", "Rekonstruirana masa 4 leptona", 50, 70., 170.);
-	entries = fChain -> GetEntriesFast();
+//	entries = fChain -> GetEntriesFast();
 	input_file = new TFile (input_name);
 	hCounters = (TH1F*) input_file -> Get ("ZZTree/Counters");
 	sum_weight = (Long64_t)hCounters -> GetBinContent (40);
 	input_tree = (TTree*) input_file -> Get ("ZZTree/candTree");
 	Init (input_tree, input_name);
+	entries = fChain -> GetEntriesFast();
 	for (int i=0; i < entries;i++){
 		fChain -> GetEntry (i);
 		event_weight = (137. * 1000 * xsec * overallEventWeight) / sum_weight;

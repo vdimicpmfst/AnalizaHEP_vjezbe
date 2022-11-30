@@ -1458,7 +1458,7 @@ private:
    TString hist_ime;
    Long64_t entries;
    TLegend* CreateLegend (TH1F *lepton1, TH1F *lepton2, TH1F *lepton3, TH1F *lepton4);
-   Float_t sum_weight, event_weight;
+   float sum_weight, event_weight;
    TH1F *hCounters;
    TFile *input_file;
    TTree *input_tree;
