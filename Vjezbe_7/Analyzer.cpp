@@ -62,7 +62,7 @@ void Analyzer::PlotHistogram (TString input_name){
 	entries = fChain -> GetEntriesFast();
 	input_file = new TFile (input_name);
 	hCounters = (TH1F*) input_file -> Get ("ZZTree/Counters");
-	sum_weight = (Float_t)hCounters -> GetBinContent (40);
+	sum_weight = (Long64_t)hCounters -> GetBinContent (40);
 	input_tree = (TTree*) input_file -> Get ("ZZTree/candTree");
 	Init (input_tree, input_name);
 	for (int i=0; i < entries;i++){
@@ -79,7 +79,7 @@ void Analyzer::PlotHistogram (TString input_name){
 		lept3.SetPtEtaPhiM(LepPt -> at (2), LepEta -> at (2), LepPhi -> at (2), 0.);
 		lept4.SetPtEtaPhiM(LepPt -> at (3), LepEta -> at (3), LepPhi -> at (3), 0.);
 
-		if (LepLepId -> at (0) + LepLepId -> at (1) == 0 && LepLepId -> at (2)+ LepLepId -> at (3) == 0){
+		if ((LepLepId -> at (0) + LepLepId -> at (1)) == 0  && (LepLepId -> at (2)+ LepLepId -> at (3)) == 0){
 			Z1 = lept1 + lept2;
 			Z2 = lept3 + lept4;
 			Higgs = Z1 + Z2;
@@ -282,6 +282,7 @@ TLegend* Analyzer::CreateLegend (TH1F *lepton1, TH1F *lepton2, TH1F *lepton3, TH
 
 void Analyzer::PlotMass(){
         canvas = new TCanvas ();
+	THStack *Mass_hist = new THStack ("stack", "stack");
         canvas -> SetCanvasSize (900,900);
         gPad -> SetLeftMargin (0.15);
         gPad -> SetBottomMargin (0.15);
@@ -291,23 +292,26 @@ void Analyzer::PlotMass(){
 	Mass_hist_background -> SetStats (0);
 	Mass_hist_background -> SetLineColor (kRed);
 	Mass_hist_background -> SetFillColorAlpha (kRed, 0.35);
-	Mass_hist = new THStack ("stack", "stack");
+	Mass_hist -> SetTitle ("Rekonstruirana masa 4 leptona");
         Mass_hist -> Add (Mass_hist_signal);
 	Mass_hist -> Add (Mass_hist_background);
-	//Mass_hist -> GetXaxis () -> SetTitle ("m_{4l} [GeV]");
-        //Mass_hist -> GetYaxis () -> SetTitle ("Events / 2 GeV");
+	Mass_hist -> Draw ("HIST");
+	Mass_hist -> GetXaxis () -> SetTitle ("m_{4l} [GeV]");
+        Mass_hist -> GetYaxis () -> SetTitle ("Events / 2 GeV");
         Mass_hist -> SetMaximum(1.4 * Mass_hist -> GetMaximum ());
-        Mass_hist -> Draw ("HIST");
-        legend = new TLegend (0.5, 0.8, 0.9, 0.9);
+        //Mass_hist -> Draw ("HIST");
+	legend = new TLegend (0.5, 0.8, 0.9, 0.9);
         legend -> AddEntry (Mass_hist_signal, "gluon-gluon fuzija", "f");
 	legend -> AddEntry (Mass_hist_background, "q#bar{q} #rightarrow Z", "f");
         legend -> SetTextSize (0.03);
         legend -> Draw ();
+
         canvas -> Print ("Mass_hist.pdf");
         canvas -> Print ("Mass_hist.png");
         canvas -> Print ("Mass_hist.root");
 
         cout << "Ocekivani broj Higgs bozona za 137/fb je " << Mass_hist_signal -> Integral () << endl;
 	cout << "Ocekivani broj pozadinskih Higgs bozona za 137/fb je " << Mass_hist_background -> Integral () << endl;
+
 
 }
