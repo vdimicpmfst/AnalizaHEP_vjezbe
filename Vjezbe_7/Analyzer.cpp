@@ -294,9 +294,9 @@ void Analyzer::PlotMass(){
 	Mass_hist_background -> SetLineColor (kRed);
 	Mass_hist_background -> SetFillColorAlpha (kRed, 0.35);
 	Mass_hist -> SetTitle ("Rekonstruirana masa 4 leptona");
-        //Mass_hist -> Add (Mass_hist_signal);
+        Mass_hist -> Add (Mass_hist_signal);
 	Mass_hist -> Add (Mass_hist_background);
-	Mass_hist -> Add (Mass_hist_signal);
+	//Mass_hist -> Add (Mass_hist_signal);
 	Mass_hist -> Draw ("HIST");
 	Mass_hist -> GetXaxis () -> SetTitle ("m_{4l} [GeV]");
         Mass_hist -> GetYaxis () -> SetTitle ("Events / 2 GeV");
