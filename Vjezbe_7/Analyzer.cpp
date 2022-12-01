@@ -388,7 +388,7 @@ void Analyzer::PlotDkin(){
 	gPad -> SetLeftMargin (0.15);
 	gPad -> SetBottomMargin (0.15);
 	hist_2d_background -> Draw ("COLZ");
-	//hist_2d_background -> SetContour (1000);
+	hist_2d_background -> SetContour (1000);
 	hist_2d_background -> SetStats (0);
 	hist_2d_background -> SetMinimum (-0.01);
 	hist_2d_background -> SetTitle ("m_{4l} vs D_{kin} background");
@@ -399,7 +399,7 @@ void Analyzer::PlotDkin(){
         gPad -> SetLeftMargin (0.15);
         gPad -> SetBottomMargin (0.15);
         hist_2d_signal -> Draw ("COLZ");
-        //hist_2d_signal -> SetContour (1000);
+        hist_2d_signal -> SetContour (1000);
         hist_2d_signal -> SetStats (0);
         hist_2d_signal -> SetMinimum (-0.01);
         hist_2d_signal -> SetTitle ("m_{4l} vs D_{kin} signal");
