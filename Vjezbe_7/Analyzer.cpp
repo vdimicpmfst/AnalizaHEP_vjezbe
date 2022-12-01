@@ -87,11 +87,13 @@ void Analyzer::PlotHistogram (TString input_name){
 		}
 		if (input_name.Contains("ggH125")){
 			Mass_hist_signal -> Fill (Higgs.M(), event_weight);
-			
+			Dkin = 1 / (1 + p_QQB_BKG_MCFM / p_GG_SIG_ghg2_1_ghz1_1_JHUGen);
+			Dkin_hist_signal -> Fill (Dkin, event_weight);
 		}
 		if (input_name.Contains("qqZZ")){
                         Mass_hist_background -> Fill (Higgs.M(), event_weight);
-
+			Dkin = 1 / (1 + 70 * p_QQB_BKG_MCFM / p_GG_SIG_ghg2_1_ghz1_1_JHUGen);
+                        Dkin_hist_background -> Fill (Dkin, event_weight);
                 }
 	}
 	for (int i = 0; i < 4; i++){
@@ -315,5 +317,42 @@ void Analyzer::PlotMass(){
         cout << "Ocekivani broj Higgs bozona za 137/fb je " << Mass_hist_signal -> Integral () << endl;
 	cout << "Ocekivani broj pozadinskih Higgs bozona za 137/fb je " << Mass_hist_background -> Integral () << endl;
 
+
+}
+
+void Analyzer::PlotDkin(){
+	canvas = new TCanvas ();
+	canvas -> SetCanvasSize (900, 900);
+	gPad -> SetLeftMargin (0.15);
+	gPad -> SetBottomMargin (0.15);
+	Dkin_hist_signal -> Scale (1. / Dkin_hist_signal -> Integral());
+	Dkin_hist_background -> Scale (1. / Dkin_hist_background -> Integral());
+	Dkin_hist_signal -> Rebin (50);
+	Dkin_hist_signal -> GetXaxis () -> SetTitle ("D_{kin}");
+	Dkin_hist_signal -> GetYaxis () -> SetTitle ("Events / 0.1");
+	Dkin_hist_signal -> SetLineColorAlpha (kRed, 0.35);
+	Dkin_hist_signal -> SetFillColorAlpha (kRed, 0.35);
+	Dkin_hist_signal -> SetStats (0);
+	Dkin_hist_signal -> SetMaximum (1.1);
+
+	Dkin_hist_background -> Rebin (50);
+        Dkin_hist_background -> GetXaxis () -> SetTitle ("D_{kin}");
+        Dkin_hist_background -> GetYaxis () -> SetTitle ("Events / 0.1");
+        Dkin_hist_background -> SetLineColorAlpha (kGreen, 0.35);
+        Dkin_hist_background -> SetFillColorAlpha (kGreen, 0.35);
+        Dkin_hist_background -> SetStats (0);
+	
+	Dkin_hist_signal -> Draw ("HIST");
+	Dkin_hist_background -> Draw ("HIST SAME");
+
+	legend = new TLegend (0.5, 0.8, 0.9, 0.9);
+	legend -> AddEntry (Dkin_hist_signal, "gluon-gluon fuzija", "f");
+	legend -> AddEntry (Dkin_hist_background, "q#bar{q} #rightarrow ZZ", "f");
+	legend -> SetTextSize (0.03);
+	legend -> Draw ();
+
+	canvas -> Print ("Dkin_hist.pdf");
+	canvas -> Print ("Dkin_hist.png");
+	canvas -> Print ("Dkin_hist.root");
 
 }

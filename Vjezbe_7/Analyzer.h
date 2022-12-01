@@ -1446,19 +1446,20 @@ public :
    virtual void     Show(Long64_t entry = -1);
    virtual void     PlotHistogram(TString input_name);
    virtual void     PlotMass();
+   virtual void	    PlotDkin();
 private:
    TCanvas *canvas;
    TH1F *LeptonPt_hist[4];
    TH1F *LeptonEta_hist[4];
    TH1F *LeptonPhi_hist[4];
    TH1F *LeptonBDT_hist[4];
-   TH1F *Mass_hist_signal, *Mass_hist_background;
+   TH1F *Mass_hist_signal, *Mass_hist_background, *Dkin_hist_signal, *Dkin_hist_background;
    TLorentzVector lept1,lept2,lept3,lept4,Z1,Z2,Higgs;
    TLegend *legend;
    TString hist_ime;
    Long64_t entries;
    TLegend* CreateLegend (TH1F *lepton1, TH1F *lepton2, TH1F *lepton3, TH1F *lepton4);
-   float sum_weight, event_weight;
+   float sum_weight, event_weight, Dkin;
    TH1F *hCounters;
    TFile *input_file;
    TTree *input_tree;
@@ -1483,6 +1484,8 @@ Analyzer::Analyzer(TTree *tree) : fChain(0)
    Init(tree,"/home/public/data/ggH125/ZZ4lAnalysis.root:/ZZTree");
    Mass_hist_signal = new TH1F ("Mass_hist_signal", "Rekonstruirana masa 4 leptona", 50, 70., 170.);
    Mass_hist_background = new TH1F ("Mass_hist_background", "Rekonstruirana masa 4 leptona", 50, 70., 170.);
+   Dkin_hist_signal = new TH1F ("Dkin_hist_sginal", "Kinematicki diskriminator", 1000, 0., 1.);
+   Dkin_hist_background = new TH1F ("Dkin_hist_background", "Kinematicki diskriminator", 1000, 0., 1.);
 }
 
 Analyzer::~Analyzer()
