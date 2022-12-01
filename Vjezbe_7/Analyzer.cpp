@@ -341,11 +341,12 @@ void Analyzer::PlotDkin(){
 		if (x > 0.001 && y > 0.001 && x < 1.0 && y < 1.0)
 			ROC -> SetPoint ((int)i, x, y);
 	}
-	
+		
 	ROC -> SetMinimum (0.95);
 	ROC -> SetMaximum (1.0);
 	ROC -> SetMarkerStyle (20);
 	ROC -> SetMarkerSize (0.4);
+	ROC -> GetXaxis () -> SetLimits (0.00, 0.05);
 	ROC -> GetXaxis () -> SetTitle ("Background efficency");
 	ROC -> GetYaxis () -> SetTitle ("Signal efficiency");
 	ROC -> GetXaxis () -> SetTitleFont (61);
