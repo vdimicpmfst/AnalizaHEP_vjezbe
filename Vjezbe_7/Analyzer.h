@@ -1463,6 +1463,7 @@ private:
    TH1F *hCounters;
    TFile *input_file;
    TTree *input_tree;
+   TGraph *ROC;
 };
 
 #endif

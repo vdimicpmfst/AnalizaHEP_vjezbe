@@ -323,10 +323,40 @@ void Analyzer::PlotMass(){
 void Analyzer::PlotDkin(){
 	canvas = new TCanvas ();
 	canvas -> SetCanvasSize (900, 900);
+	canvas -> Divide (2,1);
+	
+	canvas -> cd (2);
 	gPad -> SetLeftMargin (0.15);
 	gPad -> SetBottomMargin (0.15);
+	ROC = new TGraph ();
+
 	Dkin_hist_signal -> Scale (1. / Dkin_hist_signal -> Integral());
-	Dkin_hist_background -> Scale (1. / Dkin_hist_background -> Integral());
+        Dkin_hist_background -> Scale (1. / Dkin_hist_background -> Integral());
+	
+	float x, y;	
+
+	for (int i = 0; i < 1000; i++){
+		x = 1 - Dkin_hist_background -> Integral (1, i + 1);
+		y = 1 - Dkin_hist_signal -> Integral (1, i + 1);
+		if (x > 0.001 && y > 0.001 && x < 1.0 && y < 1.0)
+			ROC -> SetPoint ((int)i, x, y);
+	}
+	
+	ROC -> SetMinimum (0.95);
+	ROC -> SetMaximum (1.0);
+	ROC -> SetMarkerStyle (20);
+	ROC -> SetMarkerSize (0.4);
+	ROC -> GetXaxis () -> SetTitle ("Background efficency");
+	ROC -> GetYaxis () -> SetTitle ("Signal efficiency");
+	ROC -> GetXaxis () -> SetTitleFont (61);
+	ROC -> GetYaxis () -> SetTitleFont (61);
+	ROC -> SetTitle ("ROC krivulja");
+	ROC -> Draw ("ap");
+	
+	canvas -> cd (1);
+	gPad -> SetLeftMargin (0.15);
+	gPad -> SetBottomMargin (0.15);
+	
 	Dkin_hist_signal -> Rebin (50);
 	Dkin_hist_signal -> GetXaxis () -> SetTitle ("D_{kin}");
 	Dkin_hist_signal -> GetYaxis () -> SetTitle ("Events / 0.1");
@@ -350,6 +380,7 @@ void Analyzer::PlotDkin(){
 	legend -> AddEntry (Dkin_hist_background, "q#bar{q} #rightarrow ZZ", "f");
 	legend -> SetTextSize (0.03);
 	legend -> Draw ();
+	
 
 	canvas -> Print ("Dkin_hist.pdf");
 	canvas -> Print ("Dkin_hist.png");
