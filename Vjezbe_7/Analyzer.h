@@ -1464,6 +1464,7 @@ private:
    TFile *input_file;
    TTree *input_tree;
    TGraph *ROC;
+   TH2F *hist_2d_signal, *hist_2d_background;
 };
 
 #endif
@@ -1487,6 +1488,8 @@ Analyzer::Analyzer(TTree *tree) : fChain(0)
    Mass_hist_background = new TH1F ("Mass_hist_background", "Rekonstruirana masa 4 leptona", 50, 70., 170.);
    Dkin_hist_signal = new TH1F ("Dkin_hist_sginal", "Kinematicki diskriminator", 1000, 0., 1.);
    Dkin_hist_background = new TH1F ("Dkin_hist_background", "Kinematicki diskriminator", 1000, 0., 1.);
+   hist_2d_signal = new TH2F ("hist_signal", "Mass vs KD", 50, 70., 140., 20, 0., 1.);
+   hist_2d_background = new TH2F ("hist_background", "Mass vs KD", 50, 70., 140., 20, 0., 1.);
 }
 
 Analyzer::~Analyzer()

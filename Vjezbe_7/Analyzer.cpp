@@ -89,11 +89,13 @@ void Analyzer::PlotHistogram (TString input_name){
 			Mass_hist_signal -> Fill (Higgs.M(), event_weight);
 			Dkin = 1 / (1 + p_QQB_BKG_MCFM / p_GG_SIG_ghg2_1_ghz1_1_JHUGen);
 			Dkin_hist_signal -> Fill (Dkin, event_weight);
+			hist_2d_signal -> Fill (Higgs.M(), Dkin, event_weight);
 		}
 		if (input_name.Contains("qqZZ")){
                         Mass_hist_background -> Fill (Higgs.M(), event_weight);
 			Dkin = 1 / (1 + 70 * p_QQB_BKG_MCFM / p_GG_SIG_ghg2_1_ghz1_1_JHUGen);
                         Dkin_hist_background -> Fill (Dkin, event_weight);
+			hist_2d_background -> Fill (Higgs.M(), Dkin, event_weight);
                 }
 	}
 	for (int i = 0; i < 4; i++){
@@ -323,7 +325,7 @@ void Analyzer::PlotMass(){
 void Analyzer::PlotDkin(){
 	canvas = new TCanvas ();
 	canvas -> SetCanvasSize (900, 900);
-	canvas -> Divide (2,1);
+	canvas -> Divide (2,2);
 	
 	canvas -> cd (2);
 	gPad -> SetLeftMargin (0.15);
@@ -382,6 +384,27 @@ void Analyzer::PlotDkin(){
 	legend -> SetTextSize (0.03);
 	legend -> Draw ();
 	
+	canvas -> cd (3);
+	gPad -> SetLeftMargin (0.15);
+	gPad -> SetBottomMargin (0.15);
+	hist_2d_background -> Draw ("COLZ");
+	hist_2d_background -> SetContour (1000);
+	hist_2d_background -> SetStats (0);
+	hist_2d_background -> SetMinimum (-0.01);
+	hist_2d_background -> SetTitle ("m_{4l} vs D_{kin} background");
+	hist_2d_background -> GetXaxis () -> SetTitle ("m_{4l} GeV");
+	hist_2d_background -> GetYaxis () -> SetTitle ("D_{kin}");
+
+	canvas -> cd (4);
+        gPad -> SetLeftMargin (0.15);
+        gPad -> SetBottomMargin (0.15);
+        hist_2d_signal -> Draw ("COLZ");
+        hist_2d_signal -> SetContour (1000);
+        hist_2d_signal -> SetStats (0);
+        hist_2d_signal -> SetMinimum (-0.01);
+        hist_2d_signal -> SetTitle ("m_{4l} vs D_{kin} signal");
+        hist_2d_signal -> GetXaxis () -> SetTitle ("m_{4l} GeV");
+        hist_2d_signal -> GetYaxis () -> SetTitle ("D_{kin}");
 
 	canvas -> Print ("Dkin_hist.pdf");
 	canvas -> Print ("Dkin_hist.png");
