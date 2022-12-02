@@ -10,7 +10,7 @@ void Generator::GeneratePDF(){
 	canvas = new TCanvas ();
 	hist = new TH1F ("GeneratePDF", "GeneratePDF", 48, -3., 9.);
 	while (i < 1E5){
-		rng = -3 + 12 * rand () / RAND_MAX;
+		rng = -3 + 12 * (float)rand () / RAND_MAX;
 		f = (-rng * rng + 6 * rng + 27) / 36.;
 		rng2 = -3 + 12 * rand () /RAND_MAX;
 		if (rng2 < f){
