@@ -63,8 +63,8 @@ void Analyzer::Plot2DHistogram(){
 	hist -> SetContour (100);
 	hist -> GetXaxis () -> SetTitle ("J/#psi reconstructed mass / 0.02 GeV");
 	hist -> GetXaxis () -> SetLabelSize (0.03);
-	hist -> GetXaxis () -> SetTitle ("dR / 0.015");
-        hist -> GetXaxis () -> SetLabelSize (0.03);
+	hist -> GetYaxis () -> SetTitle ("dR / 0.015");
+        hist -> GetYaxis () -> SetLabelSize (0.03);
 	
 	canvas -> Print ("zad2.pdf");
 	canvas -> Print ("zad2.png");
