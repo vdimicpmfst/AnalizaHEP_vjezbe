@@ -453,7 +453,7 @@ void Analyzer::FitHiggs(){
 	
 	canvas -> cd (1);
 	total -> Draw ();
-	BW -> Draw ("SAME");
+	BW -> Draw (/*"SAME"*/);
 	Q -> Draw ("SAME");
 	
 	canvas -> cd (2);
