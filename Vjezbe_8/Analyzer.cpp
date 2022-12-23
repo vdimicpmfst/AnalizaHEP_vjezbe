@@ -429,7 +429,7 @@ void Analyzer::FitHiggs(){
 	
 	BW -> SetLineColor (kGreen);
 	
-	TF1 *Q = new TF1 ("Quadratic function", "[0] + [1]*x + [2]*x*x", 110, 150);
+	TF1 *Q = new TF1 ("Quadratic function","[0]+[1]*x+[2]*x*x",110,150);
 	Q -> SetParNames ("A", "B", "C");
 	Q -> SetParameter (0, 50.);
 	Q -> SetParameter (1, -1.);
