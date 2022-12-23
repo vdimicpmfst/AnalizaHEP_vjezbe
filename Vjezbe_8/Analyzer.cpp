@@ -423,17 +423,17 @@ void Analyzer::FitHiggs(){
 	Mass_hist_total -> Add (Mass_hist_signal);
 	TF1 *BW = new TF1 ("Breight-Wigner functin","([0]*[1])/(TMath::Power((x*x-[2]*[2]),2) + 0.25*[1]*[1])",110,150);
 	BW -> SetParNames ("D", "#Gamma", "M");
-	BW -> SetParameter (0, 20000.);
-	BW -> SetParameter (1, 800.);
-	BW -> SetParameter (2, 100.);
+	BW -> SetParameter (0,2.04151e+04);
+	BW -> SetParameter (1,8.29920e+02);
+	BW -> SetParameter (2,1.24443e+02);
 	
 	BW -> SetLineColor (kGreen);
 	
 	TF1 *Q = new TF1 ("Quadratic function","[0]+[1]*x+[2]*x*x",110,150);
 	Q -> SetParNames ("A", "B", "C");
-	Q -> SetParameter (0, 50.);
-	Q -> SetParameter (1, -1.);
-	Q -> SetParameter (2, 0.);
+	Q -> SetParameter (0,5.18051e+01);
+	Q -> SetParameter (1,-6.21340e-01);
+	Q -> SetParameter (2,2.45098e-03);
 	
 	Q -> SetLineColor (kRed);
 	
@@ -441,7 +441,7 @@ void Analyzer::FitHiggs(){
 	
 	total -> SetParNames ("D", "#Gamma", "M", "A", "B", "C");
 
-	total -> SetParameter (0, 70.);
+	total -> SetParameter (0,70.);
 	total -> SetParameter (1, 200.);
 	total -> SetParameter (2, 125.);
 	total -> SetParameter (3, 1.);
