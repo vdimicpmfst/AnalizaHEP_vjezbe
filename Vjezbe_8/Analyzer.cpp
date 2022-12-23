@@ -421,7 +421,7 @@ void Analyzer::FitHiggs(){
 	TH1F *Mass_hist_total = new TH1F ("Mass_hist_total", "Invarijantna masa rekonstruirana 4 leptona", 50, 70., 170.);
 	Mass_hist_total -> Add (Mass_hist_background);
 	Mass_hist_total -> Add (Mass_hist_signal);
-	TF1 *BW = new TF1 ("Breight-Wigner function", "[0]*[1]/(TMath::Power((x*x-[2]*[2]),2) + 0.25*[1]*[1])", 110, 150);
+	TF1 *BW = new TF1 ("Breight-Wigner functin","([0]*[1])/(TMath::Power((x*x-[2]*[2]),2) + 0.25*[1]*[1])",110,150);
 	BW -> SetParNames ("D", "#Gamma", "M");
 	BW -> SetParameter (0, 20000.);
 	BW -> SetParameter (1, 800.);
