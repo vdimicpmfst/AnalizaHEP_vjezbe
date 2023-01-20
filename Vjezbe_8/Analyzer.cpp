@@ -475,7 +475,43 @@ void Analyzer::FitHiggs(){
 
 }
 void Analyzer::FitFullMass (){
+	
+	canvas = new TCanvas();
+	canvas -> SetCanvasSize (900, 900);
+	TH1F *Mass_hist_total = new TH1F ("Mass_hist_total", "Invarijantna masa rekonstruirana 4 leptona", 50, 70., 170.);
+	Mass_hist_total -> Add (Mass_hist_background);
+	Mass_hist_total -> Add (Mass_hist_signal);
+	
+	TF1 *total = new TF1 ("Model function", "([0]*[1])/(TMath::Power((x*x-[2]*[2]),2)+ 0.25*[1]*[1]) + ([3]*[4])/(TMath::Power((x*x-[5]*[5]),2) + 0.25*[4]*[4])+[6]+[7]*x+[8]*x*x",70,150);
+	total -> SetParNames ("D1", "#Gamma_{1}","M_{1}","D_{2}","#Gamma_{2}","M_{2}","A","B","C");
+	total->SetParameter(0,70.);
+  	total->SetParameter(1,200.);
+  	total->SetParameter(2,125.);
+  	total->SetParameter(3,70.);
+  	total->SetParameter(4,200.);
+  	total->SetParameter(5,90.);
+  	total->SetParameter(6,1.);
+  	total->SetParameter(7,0.01);
+  	total->SetParameter(8,-0.0001);
 
+	total -> SetLineColor (kRed);
+	
+	total -> SetTitle ("Fit function;Mass [GeV];Events");
+	
+	Mass_hist_total -> SetBinErrorOption (TH1::kPoisson);
+	Mass_hist_total -> SetLineColor (kBlack);
+	Mass_hist_total -> SetMarkerStyle (20);
+	Mass_hist_total -> SetMarkerSize (0.9);
+	Mass_hist_total -> GetXaxis () -> SetTitle ("Mass [GeV]");
+	Mass_hist_total -> GetYaxis () -> SetTitle ("Events / 2 GeV");
 
+	Mass_hist_total -> Fit (total, "L");
+	gStyle -> SetOptFit ();
+	Mass_hist_total -> Draw ("p E1 X0");
+
+	canvas -> Print ("ParameterEstimation_FullMass.pdf");
+	canvas -> Print ("ParameterEstimation_FullMass.png");
+	canvas -> Print ("ParameterEstimation_FullMass.root");
+	
 
 }
