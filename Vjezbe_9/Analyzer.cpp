@@ -34,7 +34,7 @@ void Analyzer::LifetimeFit(){
 	HistLifetime -> GetXaxis () -> SetTitle ("t / s");
 	HistLifetime -> GetYaxis () -> SetTitle ("N");
 	HistLifetime -> Draw ();
-	HistLifetime -> Print ("LifetimeFit.pdf");
+	c1 -> Print ("LifetimeFit.pdf");
 
 
 }
