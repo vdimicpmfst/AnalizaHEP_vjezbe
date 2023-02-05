@@ -59,4 +59,30 @@ void Analyzer::LifetimeFit(){
 	c2 -> Print("Likelihood.pdf");
 
 	delete Likelihood;
+
+	LogLikelihood = new TF1 ("LogLikelihood", "-2 * ([0] * log(1.0 / x) - [1] / x)", 0.1, 5.0);
+	LogLikelihood -> SetParameters (0, nentries);
+	LogLikelihood -> SetParameters (1, sum);
+	c3 = new TCanvas ();
+	c3 -> SetCanvasSize(600,400);
+	LogLikelihood -> GetXaxis() -> SetTitle ("#tau");
+	LogLikelihood -> GetYaxis() -> SetTitle ("-2ln L(#tau)");
+	LogLikelihood -> SetTitle("Log likelihood funkcija");
+	LogLikelihood -> Draw();
+	c3 -> Print("LogLikelihood.pdf");
+	
+	Float_t tau_graph = LogLikelihood -> GetMinimumX();
+	Float_t err_dn = tau_graph - LogLikelihood -> GetX(LogLikelihood -> GetMinimum(0.1, 5) + 1, 0.1, tau_graph);
+	Float_t err_up = LogLikelihood -> GetX(LogLikelihood -> GetMinimum(0.1, 5) + 1, tau_graph, 5) - tau_graph;
+	
+	cout << "Graficki: tau = " << tau_graph << "+" << err_up << "-" << err_dn << endl;
+
+	delete LogLikelihood;
+/*	delete HistLifetime;
+	delete file;
+	delete tree;
+	
+	c1 -> Destructor();
+	c2 -> Destructor();
+	c3 -> Destructor();*/
 }
