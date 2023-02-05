@@ -40,7 +40,7 @@ void Analyzer::LifetimeFit(){
 	
 	mean = sum / nentries;
 	error = mean / sqrt(nentries);
-	C = exp -> GetParameter(1);
+	C = exp -> GetParameter(0);
 	//analiticki dobiven iz likelihood funkcije	
 	cout << "Analiticki: tau = " << mean << "±" << error << endl;
 
