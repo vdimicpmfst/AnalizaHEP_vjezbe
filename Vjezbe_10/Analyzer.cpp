@@ -36,6 +36,21 @@ void Analyzer::ChiSquare(){
 	graph -> Fit(fit);	
 
 	c -> Print("Mjerenja.pdf");
-	
+
+	c -> Destructor();
+
+	c = new TCanvas();
+	c -> SetCanvasSize(600, 400);
+
+	chi_square_fit = new TF1 ("Chi-Square", "pow(([0] - [1] * x) / [2], 2.0) + pow(([3] - [4] * x) / [5], 2.0) + pow(([6] - [7] * x) / [8], 2.0) + pow(([9] - [10] * x) / [11], 2.0) + pow(([12] - [13] * x) / [14], 2.0)", 9.4, 11.0);
+	for (int i = 0; i < 3 * 5; i+=3){
+		chi_square_fit -> SetParameter(i, a[i/3]);
+		chi_square_fit -> SetParameter(i + 1, sila[i/3]);
+		chi_square_fit -> SetParameter(i + 2, sigma_a[i/3]);
+		
+	}
+	chi_square_fit -> SetTitle ("Chi-Square funkcija;m^{-1} [kg^{-1}];#chi^2");
+	chi_square_fit -> Draw();
+	c -> Print("Chi_square.pdf");	
 
 }

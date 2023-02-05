@@ -8,6 +8,7 @@
 #include<TF1.h>
 #include<TLine.h>
 #include<TApplication.h>
+#include<cmath>
 
 using namespace std;
 
