@@ -60,9 +60,11 @@ void Analyzer::LifetimeFit(){
 
 	delete Likelihood;
 
-	LogLikelihood = new TF1 ("LogLikelihood", "-2 * ([0] * log(1.0 / x) - [1] / x)", 0.1, 5.0);
-	LogLikelihood -> SetParameters (0, nentries);
-	LogLikelihood -> SetParameters (1, sum);
+	LogLikelihood = new TF1 ("LogLikelihood","-2.0 * ([0] * log(1.0 / x) - [1] / x)", 0.1, 5.0);
+	LogLikelihood -> SetParameter (0, nentries);
+	LogLikelihood -> SetParameter (1, sum);
+	cout << sum << '\t' << nentries <<endl;
+	
 	c3 = new TCanvas ();
 	c3 -> SetCanvasSize(600,400);
 	LogLikelihood -> GetXaxis() -> SetTitle ("#tau");
