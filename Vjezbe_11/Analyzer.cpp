@@ -85,3 +85,20 @@ void Analyzer::CPpojas(int N, double CL){
 	canvas -> Print("CPpojas.pdf"); 
 
 }
+
+void Analyzer::Igra(){
+
+	srand((unsigned)time(0));
+	int i, j, n, nc;
+	for (i = 0, nc = 0; i < 1000; i++){
+		for (j = 0, n = 0; j < 10; j++)
+			if (rand() % 6 + 1 == 6)
+				n++;
+	cout << n << endl;
+	if (1. / 6 <= CPinterval(0.6827, 10, n).second && 1. / 6 >= CPinterval(0.6827, 10, n).first)
+		nc++;
+	}
+	
+	cout << "Vjerojatnost upadanja u Clopper-Pearson pojas: " << nc / 1000. << endl;
+
+}

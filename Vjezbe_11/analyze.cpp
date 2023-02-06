@@ -8,6 +8,7 @@ cout << analyzer -> CPinterval (0.6827, 10, i).first << endl;
 cout << analyzer -> CPinterval (0.6827, 10, i).second << endl << endl;
 }
 analyzer -> CPpojas(10, 0.6827);
+analyzer -> Igra();
 analyzer -> ~Analyzer(); 
 
 return 0;
