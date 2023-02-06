@@ -55,7 +55,7 @@ void Analyzer::CPpojas(int N, double CL){
 	TCanvas *canvas = new TCanvas();
 	canvas -> SetCanvasSize(1200, 800);
 	for (int i = 0; i <= N; i++){
-		hist_up -> SetBinContent(i + 1, CPinterval(CL, N, i).second - CPinterval(CL, N, i).first);
+		hist_up -> SetBinContent(i + 1, CPinterval(CL, N, i).second /*- CPinterval(CL, N, i).first*/);
 		hist_down -> SetBinContent(i + 1, CPinterval(CL, N, i).first);
 		hist_up -> GetXaxis() -> SetBinLabel(i + 1, to_string(i).c_str());
 		hist_down -> GetXaxis() -> SetBinLabel(i + 1, to_string(i).c_str());
