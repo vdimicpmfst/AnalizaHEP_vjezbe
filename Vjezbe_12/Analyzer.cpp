@@ -232,3 +232,90 @@ void Analyzer::Loop()
 	canvas -> Print("ElectronDistribution.pdf");
 
 }
+
+void Analyzer::MVATraining(TString method){
+
+	TMVA::Tools::Instance();
+	
+	TString outfileName("TMVA"+method+".root");
+	TFile *outputFile = TFile::Open(outfileName, "RECREATE");
+
+	TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G;D:AnalysisType=Classification");
+
+	TMVA::DataLoader *dataloader = new TMVA::DataLoader("dataset");
+	
+	dataloader -> AddVariable("ele_pt", "Variable 1", "", 'F');
+	dataloader -> AddVariable("scl_eta", "Variable 2", "", 'F');
+	dataloader -> AddVariable("ele_fbrem", "Variable 3", "", 'F');
+	dataloader -> AddVariable("ele_eelepout", "Variable 4", "", 'F');
+	
+	dataloader -> AddVariable("ele_hadronicOverEm", "Variable 5", "", 'F');
+	dataloader -> AddVariable("ele_gsfchi2", "Variable 6", "", 'F');
+	dataloader -> AddVariable("ele_pfChargedHadIso", "Variable 7", "", 'F');
+	dataloader -> AddVariable("ele_ep", "Variable 8", "", 'F');
+
+	dataloader -> AddSignalTree(signal, 1.);
+	dataloader -> AddBackgroundTree(background, 1.);
+
+	dataloader -> PrepareTrainingAndTestTree("", "", "nTrain_Signal=1000:nTrain_Background=1000:SplitMode=Random:NormMode=NumEvents:!V");
+
+	if(method == "GBDT")
+		factory -> BookMethod(dataloader, TMVA::Types::kBDT, method, "!H:!V:NTrees=1000:MinNodeSize=2.5%:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.5:nCuts=20:MaxDepth=2");
+	if(method == "kMLP")
+		factory -> BookMethod(dataloader, TMVA::Types::kMLP, method, "H:!V:NeuronType=tanh:VarTransform=N:NCycles=600:HiddenLayers=N+5:TestRate=5:!UseRegulator");
+
+	factory -> TrainAllMethods();
+	factory -> TestAllMethods();
+	factory -> EvaluateAllMethods();
+
+	outputFile -> Close();
+	cout << "==> Wrote root file: " << outputFile -> GetName() << endl;
+	cout << "==> TMVAClassification is done!" << endl;
+
+	delete factory;
+	delete dataloader;
+
+}
+
+void Analyzer::PlotMVAScore(TString method){
+
+	canvas = new TCanvas();
+	canvas -> SetCanvasSize(900, 900);
+	
+	if (method == "GBDT"){
+		
+		TFile *file = new TFile("TMVAGBDT.root", "READ");
+	
+		MVAScore_signal = (TH1D*) file -> Get("dataset/Method_BDT/GBDT/MVA_GBDT_S");
+		MVAScore_background = (TH1D*) file -> Get("dataset/Method_BDT/GBDT/MVA_GBDT_B");
+		sig_bkg_eff = (TH1F*) file -> Get("dataset/Method_BDT/GBDT/MVA_GBDT_effBvsS");
+		
+	}
+	else if (method == "kMLP"){
+		TFile *file = new TFile("TMVAkMLP.root", "READ");
+
+		MVAScore_signal = (TH1D*) file -> Get("dataset/Method_MLP/kMLP/MVA_kMLP_S");
+                MVAScore_background = (TH1D*) file -> Get("dataset/Method_MLP/kMLP/MVA_kMLP_B");
+                sig_bkg_eff = (TH1F*) file -> Get("dataset/Method_MLP/kMLP/MVA_kMLP_effBvsS");
+		
+	}
+
+	MVAScore_background -> SetLineColor(kBlue);
+	MVAScore_signal -> SetLineColor(kRed);
+	MVAScore_signal -> SetLineWidth(3);
+	MVAScore_background -> SetLineWidth(3);
+	MVAScore_signal -> SetStats(0);
+	MVAScore_signal -> Scale(1. / MVAScore_signal -> Integral());
+	MVAScore_background -> Scale(1. / MVAScore_background -> Integral());
+	MVAScore_signal -> SetTitle(method + " Score");
+	MVAScore_signal -> GetXaxis() -> SetTitle(method);
+	MVAScore_signal -> GetYaxis() -> SetTitle("Events 0.05");
+	MVAScore_signal -> Draw("HIST");
+	MVAScore_background -> Draw("HIST SAME");
+	if (MVAScore_background -> GetMaximum() > MVAScore_signal -> GetMaximum())
+		MVAScore_signal -> SetMaximum(1.3 * MVAScore_background -> GetMaximum());
+
+	canvas -> Print("MVAScore_" + method + ".pdf");
+	cout << "Udio propustenog backgrounda za 90%signala: " << sig_bkg_eff -> Interpolate(0.9) * 100 << endl;
+
+}
