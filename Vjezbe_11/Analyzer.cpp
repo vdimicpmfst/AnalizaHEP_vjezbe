@@ -49,13 +49,14 @@ else
 
 void Analyzer::CPpojas(int N, double CL){
 
+	gStyle -> SetOptStat(0);
 	THStack *hstack = new THStack("hs", "");
 	TH1F *hist_up = new TH1F("up", "up", 11, 0, 11);
 	TH1F *hist_down = new TH1F ("down", "down", 11, 0, 11);
 	TCanvas *canvas = new TCanvas();
 	canvas -> SetCanvasSize(1200, 800);
 	for (int i = 0; i <= N; i++){
-		hist_up -> SetBinContent(i + 1, CPinterval(CL, N, i).second /*- CPinterval(CL, N, i).first*/);
+		hist_up -> SetBinContent(i + 1, CPinterval(CL, N, i).second - CPinterval(CL, N, i).first);
 		hist_down -> SetBinContent(i + 1, CPinterval(CL, N, i).first);
 		hist_up -> GetXaxis() -> SetBinLabel(i + 1, to_string(i).c_str());
 		hist_down -> GetXaxis() -> SetBinLabel(i + 1, to_string(i).c_str());
@@ -70,6 +71,16 @@ void Analyzer::CPpojas(int N, double CL){
 	hstack -> GetXaxis() -> SetTitle("m");
 	hstack -> GetYaxis() -> SetTitle("p");
 	hstack -> SetTitle("Clopper-Pearson confidence belt");
+
+	TLine *l1 = new TLine(6.5, 0, 6.5, CPinterval(CL, N, 6).second);
+	TLine *l2 = new TLine(0, CPinterval(CL, N, 6).first, 6.5, CPinterval(CL, N, 6).first);
+	TLine *l3 = new TLine(0, CPinterval(CL, N, 6).second, 6.5, CPinterval(CL, N, 6).second);
+	l1 -> SetLineStyle(kDashed);
+	l2 -> SetLineStyle(kDashed);
+	l3 -> SetLineStyle(kDashed);
+	l1 -> Draw("SAME");
+	l2 -> Draw("SAME");
+	l3 -> Draw("SAME"); 
 
 	canvas -> Print("CPpojas.pdf"); 
 
