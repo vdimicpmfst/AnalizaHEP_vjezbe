@@ -42,8 +42,8 @@ void Analyzer::GenerateTestStatistic_H0(){
 		testStatistic_PDF -> Fill(sum / 100.);
 	}
 	
-/*	canvas -> cd();
-	testStatistic_PDF -> SetFillColor(kRed - 2);
+	canvas -> cd();
+/*	testStatistic_PDF -> SetFillColor(kRed - 2);
 	testStatistic_PDF -> SetLineColor(kRed - 2);
 	
 	testStatistic_PDF -> SetTitle("Test Statistic PDF distribution");
