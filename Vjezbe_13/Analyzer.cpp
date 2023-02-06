@@ -43,14 +43,14 @@ void Analyzer::GenerateTestStatistic_H0(){
 	}
 	
 	canvas -> cd();
-	testStatistic_PDF -> SetFillColor(kRed - 2);
+/*	testStatistic_PDF -> SetFillColor(kRed - 2);
 	testStatistic_PDF -> SetLineColor(kRed - 2);
 	
 	testStatistic_PDF -> SetTitle("Test Statistic PDF distribution");
 	testStatistic_PDF -> GetXaxis() -> SetTitle("#bar{h} [cm]");
 
 	testStatistic_PDF -> Scale(1. / testStatistic_PDF -> Integral());
-	testStatistic_PDF -> Draw("HIST");
+*/	testStatistic_PDF -> Draw("HIST");
 	
 	canvas -> Print("test.pdf");
 
