@@ -17,7 +17,7 @@ void Analyzer::PValue(){
 	file = new TFile("/home/public/data/Height/Height.root");
 	tree = (TTree*) file -> Get("Tree");
 	tree -> SetBranchAddress("height", &height);
-	testStatistic_PDF = new TH1F("height", "height", 100, 160., 170.);
+	testStatistic_PDF = new TH1F("height", "height", 40, 145., 185.);
 	Long64_t nentries = tree -> GetEntriesFast();
 	for (int i = 0, t = 0; i < nentries; i++){
 		tree -> GetEntry(i);
