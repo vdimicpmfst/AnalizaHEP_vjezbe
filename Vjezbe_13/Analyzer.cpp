@@ -125,7 +125,7 @@ void Analyzer::CompareHypothesis(TString drzava, double mu, double sigma){
         testStatistic_H1 -> Scale(1. / testStatistic_H1 -> Integral());
         testStatistic_H1 -> Draw("HIST SAME");
 
-	TLine *l = new TLine(t, 0., t, 0.4);
+	TLine *l = new TLine(t, 0., t, 0.04);
 	l -> SetLineWidth(3);
 	l -> Draw();
 
