@@ -8,6 +8,7 @@
 #include<TMath.h>
 #include<TLegend.h>
 #include<iostream>
+#include<TStyle.h>
 
 using namespace std;
 

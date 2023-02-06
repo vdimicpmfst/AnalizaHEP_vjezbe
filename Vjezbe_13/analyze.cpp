@@ -3,7 +3,7 @@
 int main(void){
 
 Analyzer *analyzer = new Analyzer();
-analyzer -> PValue();
+analyzer -> GenerateTestStatistic_H0();
 analyzer -> ~Analyzer();
 
 return 0;
