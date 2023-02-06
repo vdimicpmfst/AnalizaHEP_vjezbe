@@ -19,20 +19,43 @@ void Analyzer::PValue(){
 	tree = (TTree*) file -> Get("Tree");
 	tree -> SetBranchAddress("height", &height);
 	Long64_t nentries = tree -> GetEntriesFast();
-	for (int i = 0, t = 0; i < nentries; i++){
+	t = 0.;
+	for (int i = 0; i < nentries; i++){
 		tree -> GetEntry(i);
 		t += height;
 	}
 	t = t / 100.;
+	canvas = new TCanvas();
+	canvas -> SetCanvasSize(700, 700);
+	double p_value = 0;
+	
+	testStatistic_PDF -> SetFillColor(kRed - 2);
+	testStatistic_PDF -> SetLineColor(kRed - 2);
+	testStatistic_PDF -> SetTitle("Test Statistic PDF distribution");
+	testStatistic_PDF -> GetXaxis() -> SetTitle("#bar{h} [cm]");
+	testStatistic_PDF -> Scale(1. / testStatistic_PDF -> Integral());
+	testStatistic_PDF -> Draw("HIST");
 
+	TLine *l = new TLine(t, 0., t, 0.04);
+	l -> SetLineWidth(3);
+	l -> Draw();
+	
+	canvas -> Print("TestStatistic_PDF.pdf");
+
+	p_value = testStatistic_PDF -> Integral(testStatistic_PDF -> FindBin(t), 100);
+	cout << "p-value za H0 je: p = "<< p_value << endl;
+	cout << "Signifikantnost je: z = " << Significance(p_value) << endl;
+	
+	
+	
 }
 
 void Analyzer::GenerateTestStatistic_H0(){
 
-	canvas = new TCanvas();
+/*	canvas = new TCanvas();
 	canvas -> SetCanvasSize(700, 700);
 	gStyle -> SetOptStat(0);
-	
+*/	
 	testStatistic_PDF = new TH1F("testStatistic_PDF", "Test Statistic PDF", 100, 160., 170.);
 	double sum;
 	
@@ -44,7 +67,7 @@ void Analyzer::GenerateTestStatistic_H0(){
 			//cout << sum  << endl; 
 	}
 	
-//	canvas -> cd();
+/*	canvas -> cd();
 	testStatistic_PDF -> SetFillColor(kRed - 2);
 	testStatistic_PDF -> SetLineColor(kRed - 2);
 	
@@ -55,7 +78,7 @@ void Analyzer::GenerateTestStatistic_H0(){
 	testStatistic_PDF -> Draw("HIST");
 	
 	canvas -> Print("test.pdf");
-
+*/
 }
 
 
