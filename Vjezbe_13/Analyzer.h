@@ -27,7 +27,7 @@ class Analyzer
  
  private:
 	TRandom *rng;
-	TH1F *testStatistic_PDF, *testStatistic_H0, testStatistic_H1;
+	TH1F *testStatistic_PDF, *testStatistic_H0, *testStatistic_H1;
 	double t;
 	double Significance(double);
 	TCanvas *canvas;
