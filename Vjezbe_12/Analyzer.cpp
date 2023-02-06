@@ -89,7 +89,7 @@ void Analyzer::Loop()
 	hist_signal[0] -> GetYaxis() -> SetTitleSize(0.07);
 
 	hist_signal[0] -> Draw("HIST");
-	hist_background[0] -> Draw("SAME");
+	hist_background[0] -> Draw("HIST SAME");
 	if (hist_background[0] -> GetMaximum() > hist_signal[0] -> GetMaximum())
 		hist_signal[0] -> SetMaximum(1.3 * hist_background[0] -> GetMaximum());
 
@@ -109,7 +109,7 @@ void Analyzer::Loop()
         hist_signal[0] -> GetYaxis() -> SetTitleSize(0.07);
 
         hist_signal[1] -> Draw("HIST");
-        hist_background[1] -> Draw("SAME");
+        hist_background[1] -> Draw("HIST SAME");
         if (hist_background[1] -> GetMaximum() > hist_signal[1] -> GetMaximum())
                 hist_signal[1] -> SetMaximum(1.3 * hist_background[1] -> GetMaximum());
  
@@ -129,7 +129,7 @@ void Analyzer::Loop()
         hist_signal[2] -> GetYaxis() -> SetTitleSize(0.07);
 
         hist_signal[2] -> Draw("HIST");
-        hist_background[2] -> Draw("SAME");
+        hist_background[2] -> Draw("HIST SAME");
         if (hist_background[2] -> GetMaximum() > hist_signal[2] -> GetMaximum())
                 hist_signal[2] -> SetMaximum(1.3 * hist_background[2] -> GetMaximum());
 
@@ -142,13 +142,13 @@ void Analyzer::Loop()
         hist_signal[3] -> Scale(1. / hist_signal[3] -> Integral());
         hist_background[3] -> Scale(1. / hist_background[3] -> Integral());
         hist_signal[3] -> SetTitle("");
-        hist_signal[3] -> GetXaxis() -> SetTitle("electron fit #chi^{2}}");
+        hist_signal[3] -> GetXaxis() -> SetTitle("electron fit #chi^{2}");
         hist_signal[3] -> GetYaxis() -> SetTitle("Events / 0.1");
         hist_signal[3] -> GetXaxis() -> SetTitleSize(0.07);
         hist_signal[3] -> GetYaxis() -> SetTitleSize(0.07);
 
         hist_signal[3] -> Draw("HIST");
-        hist_background[3] -> Draw("SAME");
+        hist_background[3] -> Draw("HIST SAME");
         if (hist_background[3] -> GetMaximum() > hist_signal[3] -> GetMaximum())
                 hist_signal[3] -> SetMaximum(1.3 * hist_background[3] -> GetMaximum());
 
@@ -168,7 +168,7 @@ void Analyzer::Loop()
         hist_signal[4] -> GetYaxis() -> SetTitleSize(0.07);
 
         hist_signal[4] -> Draw("HIST");
-        hist_background[4] -> Draw("SAME");
+        hist_background[4] -> Draw("HIST SAME");
         if (hist_background[4] -> GetMaximum() > hist_signal[4] -> GetMaximum())
                 hist_signal[4] -> SetMaximum(1.3 * hist_background[4] -> GetMaximum());
 
@@ -187,7 +187,7 @@ void Analyzer::Loop()
         hist_signal[5] -> GetYaxis() -> SetTitleSize(0.07);
 
         hist_signal[5] -> Draw("HIST");
-        hist_background[5] -> Draw("SAME");
+        hist_background[5] -> Draw("HIST SAME");
         if (hist_background[5] -> GetMaximum() > hist_signal[5] -> GetMaximum())
                 hist_signal[5] -> SetMaximum(1.3 * hist_background[5] -> GetMaximum());
 
@@ -206,7 +206,7 @@ void Analyzer::Loop()
         hist_signal[6] -> GetYaxis() -> SetTitleSize(0.07);
 
         hist_signal[6] -> Draw("HIST");
-        hist_background[6] -> Draw("SAME");
+        hist_background[6] -> Draw("HIST SAME");
         if (hist_background[6] -> GetMaximum() > hist_signal[6] -> GetMaximum())
                 hist_signal[6] -> SetMaximum(1.3 * hist_background[6] -> GetMaximum());
 
@@ -225,7 +225,7 @@ void Analyzer::Loop()
         hist_signal[7] -> GetYaxis() -> SetTitleSize(0.07);
 
         hist_signal[7] -> Draw("HIST");
-        hist_background[7] -> Draw("SAME");
+        hist_background[7] -> Draw("HIST SAME");
         if (hist_background[7] -> GetMaximum() > hist_signal[7] -> GetMaximum())
                 hist_signal[7] -> SetMaximum(1.3 * hist_background[7] -> GetMaximum());
 
