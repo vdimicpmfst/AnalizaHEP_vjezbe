@@ -44,6 +44,7 @@ void Analyzer::GenerateTestStatisticPDF(int n){
 			chi2 = theoreticalPDF -> GetChisquare();
 			TestStatisticPDF -> Fill(chi2);
 		}
+		delete toy;
 	
 	}
 
@@ -90,7 +91,7 @@ void Analyzer::PValueScan(){
 		theoreticalPDF -> FixParameter(1, 100.);
 		toy -> Fit(theoreticalPDF, "Q", "", m_H - 10., m_H + 10.);
 		chi2 = theoreticalPDF -> GetChisquare();
-		
+		cout << chi2 << endl;
 		expected_p_value = TestStatisticPDF -> Integral(TestStatisticPDF -> FindBin(chi2), TestStatisticPDF -> GetNbinsX()) / TestStatisticPDF -> Integral();
 		expected_scan -> SetPoint(i / 5. - 2, m_H, expected_p_value);
 	}
