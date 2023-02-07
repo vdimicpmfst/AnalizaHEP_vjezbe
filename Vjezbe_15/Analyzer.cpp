@@ -78,7 +78,7 @@ void Analyzer::ReconstructHiggs(){
 	theoreticalPDF -> FixParameter(1, 100.);
 	RecMass -> Fit(theoreticalPDF);
 
-	legend = new TLegend(0.5, 0.5, 0.9, 0.9);
+	legend = new TLegend(0.5, 0.7, 0.9, 0.9);
 
 	legend -> AddEntry(RecMass, "Data", "EP");
 	legend -> AddEntry(theoreticalPDF, "SM prediction", "l");
