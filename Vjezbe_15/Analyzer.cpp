@@ -91,27 +91,44 @@ void Analyzer::GenerateTestStatisticPDF(int n){
 	theoreticalPDF -> SetParameter(0, 1000.);
 	theoreticalPDF -> SetParameter(1, 100.);
 	
-	float chi2, m_H = 0;
+	float chi2, m_H = 0.;
 	
 	for (int i = 0; i < n; i++){
 
 		TString ime = "toy_" + to_string(i);
 		toy = new TH1F(ime, "toy", 200, 0., 700.);
-		for (int j = 0; j < 10000; j++)
+		for (int j = 0; j < 100000; j++)
 			toy -> Fill(rng -> Exp(100));
 
 		theoreticalPDF -> FixParameter(1, 100.);
 		for (int j = 10; j < 690; j+=5){
 
-			m_H = (float)j;
+			m_H = j / 1.;
 			toy -> Fit(theoreticalPDF, "Q", "", m_H - 10., m_H + 10.);
 			chi2 = theoreticalPDF -> GetChisquare();
-			cout << chi2 << endl;
+			//cout << chi2 << endl;
 			TestStatisticPDF -> Fill(chi2);
 
 		}
 		//delete toy;
-	
+	/*  for(int i = 0; i < n; i++)
+  		{
+    			TString name = "toy_" + std::to_string(i);
+    			toy = new TH1F(name,"toy",200,0.,700.);
+
+    			for(int j = 0; j < 100000; j++) toy->Fill(rng->Exp(100));
+
+    			theoreticalPDF->FixParameter(1,100.); //fix the parameter to theoretical value
+
+    			for(int i = 10; i < 690; i+=5) // do the fit doing 5 GeV steps in 10-690 GeV region
+    			{
+      				m_H = i/1.0;
+
+      				toy->Fit(theoreticalPDF,"Q","",m_H-10,m_H+10); // perform the fit in the 20 GeV window
+      				chi2 = theoreticalPDF->GetChisquare();
+      				TestStatisticPDF->Fill(chi2);
+    			}
+  		}*/
 
 	}
 
