@@ -78,3 +78,52 @@ void Analyzer::ReconstructHiggs(){
 	canvas -> Print("ReconstructedMass.pdf");
 
 }
+
+void Analyzer::GenerateTestStatisticPDF(int n){
+
+	
+	canvas = new TCanvas();
+	canvas -> SetCanvasSize(700, 700);
+	
+	TestStatisticPDF = new TH1F("TestStatisticPDF", "TestStatisticPDF", 300, 0, 30);
+
+	theoreticalPDF = new TF1("theoreticalPDF", "[0] / TMath::Exp(x / [1])", 0, 700);
+	theoreticalPDF -> SetParameter(0, 1000.);
+	theoreticalPDF -> SetParameter(1, 100.);
+	
+	float chi2, m_H = 0;
+	
+	for (int i = 0; i < n; i++){
+
+		TString ime = "toy_" + to_string(i);
+		toy = new TH1F(ime, "toy", 200, 0., 700.);
+		for (int j = 0; j < 10000; j++)
+			toy -> Fill(rng -> Exp(100));
+
+		theoreticalPDF -> FixParameter(1, 100.);
+		for (int j = 10; j < 690; j+=5){
+
+			m_H = (float)j;
+			toy -> Fit(theoreticalPDF, "Q", "", m_H - 10., m_H + 10.);
+			chi2 = theoreticalPDF -> GetChisquare();
+			cout << chi2 << endl;
+			TestStatisticPDF -> Fill(chi2);
+
+		}
+		//delete toy;
+	
+
+	}
+
+	gStyle -> SetOptStat(0);
+	gPad -> SetBottomMargin(0.2);
+	TestStatisticPDF -> SetTitle("Test Statistic PDF");
+	TestStatisticPDF -> GetXaxis() -> SetTitle("#chi^{2}(N, #zeta_{SM})");
+	TestStatisticPDF -> GetXaxis() -> SetTitleOffset(1.5);
+	TestStatisticPDF -> Scale(1. / TestStatisticPDF -> Integral());
+	TestStatisticPDF -> Draw("HIST");
+
+	canvas -> Print("TestStatisticPDF.pdf");
+	delete canvas;
+
+}
