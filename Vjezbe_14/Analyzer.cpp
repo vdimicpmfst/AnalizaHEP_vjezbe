@@ -35,11 +35,11 @@ void Analyzer::GenerateTestStatisticPDF(int n){
 			toy -> Fill(rng -> Exp(100));
 		}
 		
-		theoreticalPDF -> SetParameter(1, 100.);
+		theoreticalPDF -> FixParameter(1, 100.);
 
 		for (int j = 10; j < 690; j += 5){
 
-			m_H = (float)i;
+			m_H = (float)j;
 			toy -> Fit(theoreticalPDF, "Q", "", m_H - 10, m_H + 10);
 			chi2 = theoreticalPDF -> GetChisquare();
 			TestStatisticPDF -> Fill(chi2);
