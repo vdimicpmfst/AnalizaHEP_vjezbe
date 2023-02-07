@@ -75,6 +75,17 @@ void Analyzer::ReconstructHiggs(){
 	RecMass -> SetMarkerColor(kBlack);
 	RecMass -> Draw("EP");
 
+	theoreticalPDF -> FixParameter(1, 100.);
+	RecMass -> Fit(theoreticalPDF);
+
+	legend = new TLegend(0.5, 0.5, 0.9, 0.9);
+
+	legend -> AddEntry(RecMass, "Data", "EP");
+	legend -> AddEntry(theoreticalPDF, "SM prediction", "l");
+
+	legend -> SetTextSize(0.03);
+	legend -> Draw();
+
 	canvas -> Print("ReconstructedMass.pdf");
 
 }
@@ -110,25 +121,7 @@ void Analyzer::GenerateTestStatisticPDF(int n){
 			TestStatisticPDF -> Fill(chi2);
 
 		}
-		//delete toy;
-	/*  for(int i = 0; i < n; i++)
-  		{
-    			TString name = "toy_" + std::to_string(i);
-    			toy = new TH1F(name,"toy",200,0.,700.);
-
-    			for(int j = 0; j < 100000; j++) toy->Fill(rng->Exp(100));
-
-    			theoreticalPDF->FixParameter(1,100.); //fix the parameter to theoretical value
-
-    			for(int i = 10; i < 690; i+=5) // do the fit doing 5 GeV steps in 10-690 GeV region
-    			{
-      				m_H = i/1.0;
-
-      				toy->Fit(theoreticalPDF,"Q","",m_H-10,m_H+10); // perform the fit in the 20 GeV window
-      				chi2 = theoreticalPDF->GetChisquare();
-      				TestStatisticPDF->Fill(chi2);
-    			}
-  		}*/
+		delete toy;
 
 	}
 

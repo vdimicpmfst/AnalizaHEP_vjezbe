@@ -73,7 +73,7 @@ public :
    TH1F *TestStatisticPDF, *toy, *toy2, *RecMass;
    TF1 *theoreticalPDF;
    TLorentzVector p1, p2;
-   TLegend *leg;
+   TLegend *legend;
    TRandom3 *rng;
    float expected_p_value, observed_p_value;
    TGraph *expected_scan, *observed_scan;
