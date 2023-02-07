@@ -65,7 +65,7 @@ public :
    virtual void     Show(Long64_t entry = -1);
 
    void GenerateTestStatisticPDF(int);
-   void ObservedPVlaueScan();
+   void ObservedPValueScan();
    void ReconstructHiggs();
 
  private:

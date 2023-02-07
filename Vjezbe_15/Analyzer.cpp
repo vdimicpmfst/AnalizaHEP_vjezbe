@@ -137,3 +137,89 @@ void Analyzer::GenerateTestStatisticPDF(int n){
 	delete canvas;
 
 }
+
+
+void Analyzer::ObservedPValueScan(){
+
+	canvas = new TCanvas();
+	canvas -> SetCanvasSize(700, 700);
+	
+	expected_scan = new TGraph();
+	observed_scan = new TGraph();
+
+	float a_SM = -1., b_SM = -190., c_SM = 0.02, sigma_SM = 0.0236;
+	float m_H = 0., t = 0., chi2_o, chi2;
+	
+	theoreticalPDF = new TF1("theoreticalPDF", "[0] / TMath::Exp(x / [1])", 0, 700);
+	theoreticalPDF -> SetParameter(0, 1000.);
+	theoreticalPDF -> SetParameter(1, 100.);
+
+	for (int i = 10; i < 690; i += 5){
+
+		m_H = (float)i;
+	
+		TString ime = "toy_" + to_string(i);
+		toy = new TH1F(ime, "toy", 200, 0., 700.);
+
+		for (int j = 0; j < 100000; j++){
+
+			if(rng -> Rndm() > a_SM * TMath::Power(m_H + b_SM, 2) + c_SM)
+				toy -> Fill(rng -> Exp(100));
+			else
+				toy -> Fill(rng -> Gaus(m_H, sigma_SM));
+		
+		}
+
+		theoreticalPDF -> FixParameter(1, 100.);
+		toy -> Fit(theoreticalPDF, "Q", "", m_H - 10, m_H + 10);
+		chi2 = theoreticalPDF -> GetChisquare();
+
+		expected_p_value = TestStatisticPDF -> Integral(TestStatisticPDF -> FindBin(chi2), TestStatisticPDF -> GetNbinsX()) / TestStatisticPDF -> Integral();
+
+		expected_scan -> SetPoint(i / 5 - 2, m_H, expected_p_value);
+
+		theoreticalPDF -> FixParameter(1, 100.);
+		
+		RecMass -> Fit(theoreticalPDF, "Q", "", m_H - 10, m_H + 10);
+		chi2_o = theoreticalPDF -> GetChisquare();
+
+		observed_p_value = TestStatisticPDF -> Integral(TestStatisticPDF -> FindBin(chi2_o), TestStatisticPDF -> GetNbinsX()) / TestStatisticPDF -> Integral();
+
+		observed_scan -> SetPoint(i / 5 - 2, m_H, observed_p_value);
+		
+		delete toy;
+	
+	}
+	
+	gPad -> SetLogy();
+	gPad -> SetGridx();
+	gPad -> SetGridy();
+	gPad -> SetLeftMargin(0.1);
+
+	expected_scan -> SetLineColor(kBlack);
+	expected_scan -> SetLineStyle(kDashed);
+	expected_scan -> SetLineWidth(2);
+	expected_scan -> SetMarkerColor(kBlack);
+	expected_scan -> SetMarkerStyle(20);
+	expected_scan -> SetMarkerSize(0.6);
+	
+	observed_scan -> SetLineColor(kRed);
+	observed_scan -> SetLineWidth(2);
+	observed_scan -> SetMarkerColor(kRed);
+	observed_scan -> SetMarkerStyle(20);
+	observed_scan -> SetMarkerSize(0.6);
+
+	mg = new TMultiGraph();
+	mg -> Add(expected_scan);
+	mg -> Add(observed_scan);
+	mg -> SetTitle("Observed p-value scan");
+	mg -> SetMinimum(0.000001);
+	mg -> Draw("ALP");
+	mg -> GetXaxis() -> SetRangeUser(0, 700);
+	mg -> GetXaxis() -> SetTitle("m_{H}");
+	mg -> GetYaxis() -> SetTitle("p-value");
+	mg -> GetYaxis() -> SetTitleOffset(0.7);
+
+	canvas -> Print("ObservedPValueScan.pdf");
+
+}
