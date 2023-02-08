@@ -23,7 +23,7 @@ void Analyzer::FitToy(){
 	Long64_t nentries = tree -> GetEntriesFast();
 	canvas = new TCanvas();
 	canvas -> SetCanvasSize(700, 700);
-	hist = new TH1F("hist", "hist", 100, 0., 10.1);
+	hist = new TH1F("hist", "hist", 100, 0., 10.);
 	for (int i = 0; i < nentries; i++){
 
 		tree -> GetEntry(i);
@@ -39,6 +39,7 @@ void Analyzer::FitToy(){
 	hist -> Fit(f, "L", "", 0, 10);
 	
 	hist -> Draw("HIST");
+	f -> Draw("");
 	canvas -> Print("test.pdf");
 
 }
