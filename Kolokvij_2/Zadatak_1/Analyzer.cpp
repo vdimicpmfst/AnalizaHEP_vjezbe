@@ -31,7 +31,7 @@ void Analyzer::FitToy(){
 	
 	}
 	gStyle -> SetOptStat(0);
-	f = new TF1("fit funkcija", "[0] * (TMath::Exp(-x / [1]) + TMath::Exp(-(x - [2]) * (x - [2]) / 2. / [3]))", 0, 10);
+	f = new TF1("fit funkcija", "[0] * (TMath::Exp(-x / [1]) + TMath::Exp(-(x - [2]) * (x - [2]) / 2. / [3] / [3]))", 0, 10);
 	f -> SetParameter(0, 224.);
 	f -> SetParameter(1, 4.);
 	f -> SetParameter(2, 3.);
