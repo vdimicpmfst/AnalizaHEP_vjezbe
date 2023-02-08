@@ -23,14 +23,21 @@ void Analyzer::FitToy(){
 	Long64_t nentries = tree -> GetEntriesFast();
 	canvas = new TCanvas();
 	canvas -> SetCanvasSize(700, 700);
-	hist = new TH1F("hist", "hist", 100, 0., 10.);
+	hist = new TH1F("hist", "hist", 100, 0., 10.1);
 	for (int i = 0; i < nentries; i++){
 
 		tree -> GetEntry(i);
 		hist -> Fill(var);
 	
 	}
+	f = new TF1("fit funkcija", "[0] * (TMath::Exp(-x / [1]) + TMath::Exp(-(x - [2]) * (x - [2]) / 2. / [3]))");
+	f -> SetParameter(0, 250.);
+	f -> SetParameter(1, 4.);
+	f -> SetParameter(2, 3.);
+	f -> SetParameter(3, 0.3);
 
+	hist -> Fit(f, "L", "", 0, 10);
+	
 	hist -> Draw("HIST");
 	canvas -> Print("test.pdf");
 
