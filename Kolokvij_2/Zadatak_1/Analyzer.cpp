@@ -39,7 +39,7 @@ void Analyzer::FitToy(){
 	hist -> Fit(f, "L", "", 0, 10);
 	
 	hist -> Draw("HIST");
-	f -> Draw("");
+	f -> Draw("SAME");
 	canvas -> Print("test.pdf");
 
 }
